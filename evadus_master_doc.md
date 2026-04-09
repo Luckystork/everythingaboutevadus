@@ -1,5 +1,5 @@
 # ZAP: COMPLETE ENGINEERING & ARCHITECTURE SPECIFICATION
-**Version:** 1.17 (The Absolute Final Uncompressed Blueprint)
+**Version:** 1.18 (The Absolute Final Uncompressed Blueprint)
 **Target:** 2026 Advanced Proctoring Bypasses (Respondus, SEB, Pearson, ProctorU, Canvas, Bluebook, Turnitin, Mercer Mettl, PSI Secure, TAO by OAT, EC-Council/LogMeIn Resolve, Iris Invigilation)
 
 ---
@@ -48,7 +48,9 @@ Dead center at the top of the launcher are three wide, high-contrast tabs: `LITE
 
 ### 1.5 System & Device Requirements
 To ensure users know Zap is highly optimized and accessible, the following minimum requirements are officially supported:
-* **OS:** Windows 10 or Windows 11 (64-bit) (Home or Pro Edition). *(Note: Native Mac compatibility is not supported directly, but works flawlessly via Parallels Windows 11 ARM VM).*
+* **OS:** Windows 10 or Windows 11 (64-bit) (Home or Pro Edition).
+  * **Tiny10 / Tiny11 Support:** Zap natively packs the required legacy `.dll` dependencies to run flawlessly on stripped-down, custom Windows ISOs to save RAM.
+  * *(Note: Native Mac compatibility is not supported directly, but works flawlessly via Parallels Windows 11 ARM VM).*
 * **Processor:** Intel Core i3 / AMD Ryzen 3 or higher (Basic multi-core processor).
 * **RAM:** 8GB minimum (16GB recommended for smooth PLUS bare-metal allocation).
 * **GPU:** Integrated graphics (iGPU) are fully supported. No dedicated graphics card required.
@@ -88,6 +90,7 @@ To ensure users know Zap is highly optimized and accessible, the following minim
     * **Windows Home Fix:** This installer automatically patches the host system's `termsrv.dll` file in System32 to forcefully allow concurrent multi-session RDP hosting, completely bypassing Microsoft's standard Windows Home Edition RDP locks.
   * **Adaptive Resolution:** Toggles for "Host Fullscreen" vs. "Custom X/Y" with free aspect ratio stretching for ultra-wide monitors. Includes a "Hardware GPU Acceleration" sub-toggle to prevent fullscreen lagging.
   * **Hardware Passthrough:** Dropdown to route the raw physical IDs of the Host Microphone and Webcam into the VM. Includes a **"Force-Refresh USB Cache"** button to fix the Evadus bug where cameras fail to show up in the list.
+    * **Native USB-over-IP Tunnel:** Eliminates the need for paid third-party apps like VirtualHere. Zap natively emulates physical USB hubs to perfectly pass modern webcams and proprietary devices directly into the VM.
   * **GPU Driver & Gamma Bypass Toggle:** Kernel-level hooks to spoof GPU signatures and defeat advanced color-monitoring detection.
   * **Dynamic Resource & Firmware Allocation:** Input fields to manually specify CPU Core Count, RAM allocation, and a button to **"Clone Host SMBIOS/MAC Address"** so the VM perfectly mimics the Host PC's hardware fingerprint to bypass deep forensic checks.
   * **Interception Monitor:** A live, scrolling terminal log of detected proctor executables.
@@ -141,7 +144,7 @@ The primary ImGui overlay used inside the exam environment.
 * **Anti-Detector Paraphraser Engine:** A dedicated hotkey module that allows the user to instantly rewrite an AI-generated essay or text block to explicitly bypass Turnitin and other academic AI detectors. Can be cycled up to 5 times per query.
 * **Discrete Answer Module:** A tiny, transparent, scrollable box (200x100px) showing *only* final A/B/C/D answers for 2-camera physical room scans.
 * **Markdown Rendering:** Formatted equations, code blocks, and bold text.
-* **Push-to-Talk (PTT) Audio Query:** Bound to a mouse side-button. Hold to whisper questions to the AI hands-free.
+* **Push-to-Talk (PTT) Audio Query:** Bound to a mouse side-button or USB foot pedal. Hold to whisper questions to the AI hands-free.
 
 ---
 
@@ -153,9 +156,10 @@ The primary ImGui overlay used inside the exam environment.
 * **The Panic Switch (Ctrl+Alt+F):** Instantly vaporizes the RAM Vault, terminates AI threads, and vanishes all overlays.
 * **Capture Tools & Hotkeys:**
   * **Keyboard Snip Hotkey:** Dedicated global keyboard shortcut (Default: `Ctrl+Shift+S`, user-customizable) to instantly trigger the stealth region capture tool.
+  * **The Auto-Clipboard Sanitizer:** Directly post-snip, Zap actively wipes the Windows clipboard in sub-10 milliseconds to prevent SEB/Mercer Mettl from detecting the image in the system memory.
   * **The Paraphrase Hotkey (Ctrl+Shift+P):** Immediately triggers the Anti-Detector Paraphraser Engine on the last generated text block.
   * **Ghost Mode Hotkey (Ctrl+Shift+G):** Instantly toggles the overlay's click-through state.
-  * **Mouse-Bound Macros:** Option to bind Pause/Release and Snip tools to Mouse Button 4 and Mouse Button 5.
+  * **Extended HID / Foot Pedal Support:** Explicit API support to map any hotkey directly to F13-F24 bindings, natively supporting generic USB Foot Pedals for fully hands-free interaction.
   * **Nav-Bar Rapid Capture:** Title-bar camera icon for 1-click Snip-Paste-Send.
 * **Capture Indicator Suppression:** Hooks deeply into the Windows Desktop Duplication API to actively suppress the "Screen is being recorded" red-dot indicator or system-tray notifications generated by the host OS.
 * **Stealth DVR (Local Recording):** A hotkey-triggered, hardware-accelerated local screen recorder that saves directly to the Volatile RAM Vault, bypassing OBS/Game Bar blocks, allowing users to secretly record exams for later study.
@@ -235,4 +239,4 @@ During the C++ build phase, all tier locks, API checks, and HWID bindings are st
   * Remote Access Tool.
 
 ---
-**[END OF MASTER SPECIFICATION V1.17]**
+**[END OF MASTER SPECIFICATION V1.18]**
