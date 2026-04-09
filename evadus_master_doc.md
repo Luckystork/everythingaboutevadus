@@ -1,5 +1,5 @@
 # ZAP: COMPLETE ENGINEERING & ARCHITECTURE SPECIFICATION
-**Version:** 1.8 (The Uncompressed Master Blueprint - UI, Stealth, UX, Network, Errors & Monetization)
+**Version:** 1.10 (The Definitive Uncompressed Blueprint - UI, Stealth, UX, Network, Errors & Monetization)
 **Target:** 2026 Advanced Proctoring Bypasses (Respondus, SEB, Pearson, ProctorU, Canvas, Bluebook, etc.)
 
 ---
@@ -17,11 +17,11 @@ The Launcher is a standalone C++ ImGui dashboard designed for zero-latency perfo
 
 ### 1.3 Top Navigation (The "Chameleon" Tab System)
 Dead center at the top of the launcher are three wide, high-contrast tabs: `LITE`, `CORE`, and `PLUS`.
+* **Universal Free Access:** The core stealth mechanics and bypasses of all three tabs are universally free and accessible to all users. They are never locked behind a paywall.
 * **Dynamic Content Shifting:** Clicking a tab swaps the entire main body settings and shifts the accent color of the application:
   * `LITE` = Electric Cyan (`#00FFFF`)
   * `CORE` = Vivid Purple (`#BF00FF`)
   * `PLUS` = Zap Electric Yellow (`#D4FF00`)
-* **Tier Locking UX:** If a user does not have the required subscription tier for a specific tab (e.g., Free user clicking PLUS), the tab's settings are greyed out, a Padlock icon appears in the center, and clicking it displays an inline prompt to upgrade via the website.
 
 ### 1.4 The Command Hub (Top-Right Corner)
 * **Status Shield:** A glowing shield icon next to the profile. 
@@ -31,7 +31,7 @@ Dead center at the top of the launcher are three wide, high-contrast tabs: `LITE
 * **The User Profile Icon:** A circular avatar. Clicking it opens the Master Dropdown Menu:
   * **User Identity:** Displays the logged-in Email and a unique alphanumeric Zap ID.
   * **Live Account Stats:** "AI Requests Used: X/5" (or "Unlimited") and "Total Active Exam Time."
-  * **Active Plan Details:** Displays "Free Trial," "Monthly Subscriber," or "Annual Subscriber."
+  * **Active Plan Details:** Displays "Basic Plan," "Premium Plan," or "Unlimited Plan."
   * **Cryo-Billing Toggle:** A 1-click button to "Freeze" subscription time during academic breaks.
   * **Global Settings (Opens a Pop-up Modal):**
     * **BYO API Key Manager:** Input fields to override Zap's Master Key. Supports: OpenAI, Anthropic, Gemini, OpenRouter, and Local LM Studio IP/Ports.
@@ -43,7 +43,7 @@ Dead center at the top of the launcher are three wide, high-contrast tabs: `LITE
 
 ---
 
-## 2. THE 3-TIER BYPASS MODES (TAB-SPECIFIC SETTINGS)
+## 2. THE 3-TIER BYPASS MODES (UNIVERSALLY FREE)
 
 ### 2.1 The [LITE] Tab (Browser-Level Stealth)
 **Target:** Screen-share proctors (Canvas, Zoom, standard ProctorU).
@@ -103,22 +103,23 @@ The primary ImGui overlay used inside the exam environment.
 * **Compact Mode (Stealth Anchor):** Clicking the minimize dash collapses the entire UI into a tiny 50x50px floating pill. Expanding it restores the exact previous state.
 * **Persistent UI Memory:** Remembers X/Y position, scaling, and opacity across all sessions and reboots.
 
-### 4.2 AI Intelligence & Routing
-* **Omni-Model Selector:** Dropdown for Claude 4.6, Grok 4, GPT-5.2, and Deepseek V3.2 R1.
+### 4.2 AI Intelligence & Dual-Injection Workflow
+* **Omni-Model Selector:** Dropdown for available models based on user tier.
 * **Omni-Model Quick Cycle:** A keyboard shortcut to cycle through LLMs instantly without opening the dropdown.
 * **OpenRouter Auto-Mode:** Automatic task-based routing (identifies Math vs. Writing).
 * **System Prompt Injection:** User-defined master behavior rules (e.g., "Answer-only mode").
 * **Auto-Text Appending:** Field to automatically attach a prefix (e.g., "Solve this:") to all captures.
 * **Neural Text Sanitization:** Regex filter to strip AI-disclaimers (e.g., "As an AI model...").
 * **Textbook/CV Upload:** Button to attach PDFs for the AI to reference during answers.
-* **LaTeX & Advanced OCR:** The screen snipping tool utilizes an advanced OCR pipeline to preserve LaTeX math formatting and multi-language text before sending it to the AI prompt.
+* **Dual-Injection OCR Method (The Math & Graph Bypass):** * The screen snipping tool captures the image and simultaneously processes it through a local, specialized LaTeX OCR neural network. 
+  * Zap sends the *raw, uncompressed screenshot* directly to the AI's native vision engine (to read graphs and spatial diagrams).
+  * Directly underneath the image, Zap injects the perfectly extracted LaTeX math text to prevent the AI from hallucinating compressed, blurry symbols.
 
-### 4.3 UI Features & Workflow
+### 4.3 UI Features
 * **Drag-and-Drop Capture Cache:** Vertical sidebar history for thumbnails; support for multi-image sending.
 * **Follow-up Input Box:** A dedicated text field at the bottom of the chat to ask the AI follow-up questions about the generated answer.
 * **Discrete Answer Module:** A tiny, transparent, scrollable box (200x100px) showing *only* final A/B/C/D answers for 2-camera physical room scans.
 * **Markdown Rendering:** Formatted equations, code blocks, and bold text.
-* **Live Mode:** Real-Time WebSocket streaming for audio/video transcription during job interviews.
 * **Push-to-Talk (PTT) Audio Query:** Bound to a mouse side-button. Hold to whisper questions to the AI hands-free.
 
 ---
@@ -164,24 +165,44 @@ The primary ImGui overlay used inside the exam environment.
 
 ## 8. BUSINESS LOGIC & MONETIZATION (API SYNC)
 
-### 8.1 Web-First Purchasing Architecture
+### 8.1 Local Development Bypasses (Feature Flags)
+During the C++ build phase, all tier locks, API checks, and HWID bindings are strictly disabled via developer flags to allow rapid local testing and compilation without triggering the server anti-piracy logic:
+* `#define DEV_UNLOCK_ALL true` (Unlocks all premium AI features/models).
+* `#define DEV_DISABLE_HWID true` (Bypasses motherboard cryptographic locking).
+
+### 8.2 Web-First Purchasing Architecture
 * **Purchase Flow:** Users create accounts and purchase subscriptions entirely on the Zap Website. 
 * **App Sync:** The Zap desktop app contains NO payment processing UI. Upon login, the app hits the `api.zap.com/v1/auth` endpoint to retrieve the user's active tier and sets the internal state.
-* **Development Strategy (Feature Flags):** During the C++ build phase, all tier locks and API checks are wrapped in a developer feature flag (`#define DEV_UNLOCK_ALL true`). This allows seamless local building and testing while the web backend is under construction.
 
-### 8.2 Subscription Tiers (Evadus Matched)
+### 8.3 Subscription Tiers (AI & Usage Caps)
+*Note: All Bypass mechanisms (LITE, CORE, PLUS) are completely free. Users pay strictly for AI bandwidth and features.*
+
 * **Basic Plan ($0):**
-  * 5 Requests/day. 
-  * LITE tab access only.
-  * Access to 1 AI Model.
+  * 5 Requests / day. 
+  * 1 Screenshot / Audio clip per request.
+  * AI Chat via BYOK (Bring Your Own Key) only.
+  * Access to 1 AI Model (Gemini 2.5 Flash Lite).
+  * Additional Context & File Uploads.
+  * Unlimited Evadus Lite Access, Screensharing, and Remote Access Tool.
 * **Premium Plan ($35/month | $50/year):**
   * Unlimited Requests. 
-  * CORE tab access.
-  * All Gemini Models.
+  * 5 Screenshots / Audio clips per request.
+  * AI Chat (via Gemini Models or BYOK).
+  * Access to all Gemini Models (3.1 Pro, 2.5 Pro, etc.).
+  * Default Additional Context Presets.
+  * Customizable Hotkeys.
+  * File Uploads.
+  * 2 hours of Screensharing.
+  * Remote Access Tool.
 * **Unlimited Plan ($60/month | $80/year):**
   * Unlimited Requests. 
-  * PLUS tab access (Bare-metal bypass). 
-  * Omni-Model access (Claude 4.6, GPT-5.2, Deepseek V3.2).
+  * Unlimited Screenshots / Audio clips per request.
+  * AI Chat (BYOK & Unlimited access to all LLMs).
+  * Access to all flagship AI models (Claude 4.6 Opus, Grok 4, GPT-5.2, Deepseek V3.2 R1).
+  * Customizable Presets & Context.
+  * File Uploads.
+  * Unlimited Screensharing.
+  * Remote Access Tool.
 
 ---
-**[END OF MASTER SPECIFICATION V1.8]**
+**[END OF MASTER SPECIFICATION V1.10]**
