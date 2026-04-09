@@ -1,5 +1,5 @@
 # ZAP: COMPLETE ENGINEERING & ARCHITECTURE SPECIFICATION
-**Version:** 1.12 (The Definitive Uncompressed Blueprint - UI, Stealth, UX, Network, OpenRouter Backend, & Hardware Specs)
+**Version:** 1.13 (The Flawless Master Blueprint - UI, Stealth, UX, Network, OpenRouter Backend, & Bare-Metal Engineering)
 **Target:** 2026 Advanced Proctoring Bypasses (Respondus, SEB, Pearson, ProctorU, Canvas, Bluebook, etc.)
 
 ---
@@ -43,7 +43,7 @@ Dead center at the top of the launcher are three wide, high-contrast tabs: `LITE
 
 ### 1.5 System & Device Requirements
 To ensure users know Zap is highly optimized and accessible, the following minimum requirements are officially supported:
-* **OS:** Windows 10 or Windows 11 (64-bit).
+* **OS:** Windows 10 or Windows 11 (64-bit) (Home or Pro Edition).
 * **Processor:** Intel Core i3 / AMD Ryzen 3 or higher (Basic multi-core processor).
 * **RAM:** 8GB minimum (16GB recommended for smooth PLUS bare-metal allocation).
 * **GPU:** Integrated graphics (iGPU) are fully supported. No dedicated graphics card required.
@@ -78,7 +78,8 @@ To ensure users know Zap is highly optimized and accessible, the following minim
 **Target:** Kernel-level lockdown browsers (Respondus, SEB, Pearson OnVUE, Bluebook).
 * **Mechanic:** Creates a dual-session bare-metal environment using a custom RDP wrapper.
 * **Settings Panel:**
-  * **"Setup This PC" Button:** When clicked, it launches the standalone **RDP Wrapper Installer** executable to configure the registry and environment.
+  * **"Setup This PC" Button:** When clicked, it launches the standalone **RDP Wrapper Installer** executable. 
+    * **Windows Home Fix:** This installer automatically patches the host system's `termsrv.dll` file in System32 to forcefully allow concurrent multi-session RDP hosting, completely bypassing Microsoft's standard Windows Home Edition RDP locks.
   * **Adaptive Resolution:** Toggles for "Host Fullscreen" vs. "Custom X/Y" with free aspect ratio stretching for ultra-wide monitors.
   * **Hardware Passthrough:** Dropdown to route the raw physical IDs of the Host Microphone and Webcam into the VM.
   * **GPU Driver & Gamma Bypass Toggle:** Kernel-level hooks to spoof GPU signatures and defeat advanced color-monitoring detection.
@@ -217,4 +218,4 @@ During the C++ build phase, all tier locks, API checks, and HWID bindings are st
   * Remote Access Tool.
 
 ---
-**[END OF MASTER SPECIFICATION V1.12]**
+**[END OF MASTER SPECIFICATION V1.13]**
