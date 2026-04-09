@@ -1,6 +1,6 @@
 # ZAP: COMPLETE ENGINEERING & ARCHITECTURE SPECIFICATION
-**Version:** 1.14 (The Final Blueprint - UI, Stealth, UX, Network, OpenRouter Backend, & Bare-Metal Engineering)
-**Target:** 2026 Advanced Proctoring Bypasses (Respondus, SEB, Pearson, ProctorU, Canvas, Bluebook, Turnitin)
+**Version:** 1.16 (The Absolute Final Uncompressed Blueprint)
+**Target:** 2026 Advanced Proctoring Bypasses (Respondus, SEB, Pearson, ProctorU, Canvas, Bluebook, Turnitin, Mercer Mettl, PSI Secure)
 
 ---
 
@@ -10,10 +10,12 @@ The Launcher is a standalone C++ ImGui dashboard designed for zero-latency perfo
 ### 1.1 First-Execution Stealth (Polymorphic Launch)
 * **Runtime Mutator:** Before the UI ever renders, the `Zap.exe` executes a Runtime Mutator. It recompiles its own memory footprint and changes its process name in Task Manager to a randomly generated whitelisted Windows service (e.g., `spoolsv_update.exe` or `svchost_sys.exe`).
 * **Auto-Cleanup:** Upon successful launch, Zap automatically deletes its own installation `.zip` file and desktop shortcut to clear forensic footprints from the hard drive.
+* **Deep Registry Purge:** Upon closing or exiting the application, Zap scrubs all of its temporary execution traces from the `HKEY_CURRENT_USER` and `HKEY_LOCAL_MACHINE` registry paths to defeat deep forensic IT scans.
 
 ### 1.2 Visual Identity & The Window
 * **The Frame:** A sleek, frameless borderless window. No standard Windows title bars or borders. It is draggable by clicking anywhere on the background.
 * **Base Palette:** Obsidian Black (`#0D0D0D`) backgrounds with Charcoal Grey (`#1A1A1A`) floating panels, and Off-White text (`#EDEDED`).
+* **Light Theme Toggle:** An optional "Light Mode" (White background, Dark Grey text) available in settings for users who specifically requested it for brightly lit rooms.
 
 ### 1.3 Top Navigation (The "Chameleon" Tab System)
 Dead center at the top of the launcher are three wide, high-contrast tabs: `LITE`, `CORE`, and `PLUS`.
@@ -44,7 +46,7 @@ Dead center at the top of the launcher are three wide, high-contrast tabs: `LITE
 
 ### 1.5 System & Device Requirements
 To ensure users know Zap is highly optimized and accessible, the following minimum requirements are officially supported:
-* **OS:** Windows 10 or Windows 11 (64-bit) (Home or Pro Edition).
+* **OS:** Windows 10 or Windows 11 (64-bit) (Home or Pro Edition). *(Note: Native Mac compatibility is not supported directly, but works flawlessly via Parallels Windows 11 ARM VM).*
 * **Processor:** Intel Core i3 / AMD Ryzen 3 or higher (Basic multi-core processor).
 * **RAM:** 8GB minimum (16GB recommended for smooth PLUS bare-metal allocation).
 * **GPU:** Integrated graphics (iGPU) are fully supported. No dedicated graphics card required.
@@ -76,15 +78,15 @@ To ensure users know Zap is highly optimized and accessible, the following minim
     * **Human Error %** slider to inject artificial typos and backspace corrections.
 
 ### 2.3 The [PLUS] Tab (Bare-Metal Kernel Isolation)
-**Target:** Kernel-level lockdown browsers (Respondus, SEB, Pearson OnVUE, Bluebook).
+**Target:** Kernel-level lockdown browsers (Respondus, SEB, Pearson OnVUE, Bluebook, PSI Secure).
 * **Mechanic:** Creates a dual-session bare-metal environment using a custom RDP wrapper.
 * **Settings Panel:**
   * **"Setup This PC" Button:** When clicked, it launches the standalone **RDP Wrapper Installer** executable. 
     * **Windows Home Fix:** This installer automatically patches the host system's `termsrv.dll` file in System32 to forcefully allow concurrent multi-session RDP hosting, completely bypassing Microsoft's standard Windows Home Edition RDP locks.
-  * **Adaptive Resolution:** Toggles for "Host Fullscreen" vs. "Custom X/Y" with free aspect ratio stretching for ultra-wide monitors.
-  * **Hardware Passthrough:** Dropdown to route the raw physical IDs of the Host Microphone and Webcam into the VM.
+  * **Adaptive Resolution:** Toggles for "Host Fullscreen" vs. "Custom X/Y" with free aspect ratio stretching for ultra-wide monitors. Includes a "Hardware GPU Acceleration" sub-toggle to prevent fullscreen lagging.
+  * **Hardware Passthrough:** Dropdown to route the raw physical IDs of the Host Microphone and Webcam into the VM. Includes a **"Force-Refresh USB Cache"** button to fix the Evadus bug where cameras fail to show up in the list.
   * **GPU Driver & Gamma Bypass Toggle:** Kernel-level hooks to spoof GPU signatures and defeat advanced color-monitoring detection.
-  * **Dynamic Resource Allocation:** Input fields to manually specify CPU Core Count and RAM allocation so the VM matches the physical Host PC specs exactly, defeating hardware-mismatch flags.
+  * **Dynamic Resource & Firmware Allocation:** Input fields to manually specify CPU Core Count, RAM allocation, and a button to **"Clone Host SMBIOS/MAC Address"** so the VM perfectly mimics the Host PC's hardware fingerprint to bypass deep forensic checks.
   * **Interception Monitor:** A live, scrolling terminal log of detected proctor executables.
 * **Robotic Audio Fix:** Hardcodes a 48kHz / 16-bit audio stream with a fixed 20ms buffer size via the RDP registry, guaranteeing clean microphone passthrough.
 * **Hypervisor Watchdog (Boot Loop Fix):** Edits the virtual machine's BCD (Boot Configuration Data) to permanently disable `RecoveryEnabled` and ignore all disk-check flags, preventing the "Preparing Automatic Repair" loop.
@@ -101,6 +103,7 @@ Designed to provide a secure, proctor-invisible portal for remote helpers. Acces
   * **Connection Toggle:** Large button to initiate/terminate the WebSocket handshake.
 * **Bypass:** Operates entirely through Zap's process-ghosting, making it invisible to proctoring software that specifically flags AnyDesk, TeamViewer, or Chrome Remote Desktop.
 * **Proctor-Priority Input Override:** If a live proctor takes control of the student's mouse, physical movement on the host machine instantly suspends the remote helper's input for 10 seconds to prevent "cursor fighting."
+* **Full Input Passthrough:** Explicitly encodes and transmits mouse-wheel scroll events and modifier keys (Ctrl/Shift) via the WebSocket to ensure the remote helper has native 1:1 control.
 * **Silent Comms Channel:** Once connected, the remote helper can type messages that appear as a tiny, translucent, scrolling text-ticker at the very bottom edge of the student's screen.
 
 ---
@@ -111,13 +114,16 @@ The primary ImGui overlay used inside the exam environment.
 ### 4.1 UI Placement & Accessibility
 * **Default State:** Anchored vertically to the right side of the screen.
 * **Compact Mode (Stealth Anchor):** Clicking the minimize dash collapses the entire UI into a tiny 50x50px floating pill. Expanding it restores the exact previous state.
+* **Click-Through "Ghost" Mode:** A UI toggle (and hotkey) that locks the overlay visually on screen but makes it completely un-clickable. All mouse events pass *through* the overlay directly into the exam software underneath, ensuring it never blocks "Submit" or "Next" buttons.
 * **Persistent UI Memory:** Remembers X/Y position, scaling, and opacity across all sessions and reboots.
 
-### 4.2 AI Intelligence & Dual-Injection Workflow
+### 4.2 AI Intelligence & Workflow
 * **Omni-Model Selector:** Dropdown for available models based on user tier.
 * **Omni-Model Quick Cycle:** A keyboard shortcut to cycle through LLMs instantly without opening the dropdown.
 * **OpenRouter Auto-Mode (Dynamic Routing):** A powerful toggle that allows OpenRouter's native auto-routing algorithm to decide which model to use. It dynamically analyzes the user's prompt and sends it to the most capable, cost-effective model for the task.
+* **Offline Local-LLM Failsafe:** If the proctoring software strictly severs all outbound internet connections, Zap automatically falls back to pinging the local LM Studio IP/Port, allowing full AI capability completely offline.
 * **System Prompt Injection:** User-defined master behavior rules (e.g., "Answer-only mode").
+* **Live Interview Transcription Mode:** A dedicated toggle that establishes a real-time audio pipeline from the host system/microphone directly to the AI, providing live transcription and coding answers for verbal job interviews.
 * **Auto-Text Appending:** Field to automatically attach a prefix (e.g., "Solve this:") to all captures.
 * **Neural Text Sanitization:** Regex filter to strip AI-disclaimers (e.g., "As an AI model...").
 * **Textbook/CV Upload:** Button to attach PDFs for the AI to reference during answers.
@@ -128,7 +134,7 @@ The primary ImGui overlay used inside the exam environment.
 ### 4.3 UI Features
 * **Drag-and-Drop Capture Cache:** Vertical sidebar history for thumbnails; support for multi-image sending.
 * **Follow-up Input Box:** A dedicated text field at the bottom of the chat to ask the AI follow-up questions about the generated answer.
-* **Anti-Detector Paraphraser Engine:** A dedicated hotkey module that allows the user to instantly rewrite an AI-generated essay or text block to explicitly bypass Turnitin and other academic AI detectors.
+* **Anti-Detector Paraphraser Engine:** A dedicated hotkey module that allows the user to instantly rewrite an AI-generated essay or text block to explicitly bypass Turnitin and other academic AI detectors. Can be cycled up to 5 times per query.
 * **Discrete Answer Module:** A tiny, transparent, scrollable box (200x100px) showing *only* final A/B/C/D answers for 2-camera physical room scans.
 * **Markdown Rendering:** Formatted equations, code blocks, and bold text.
 * **Push-to-Talk (PTT) Audio Query:** Bound to a mouse side-button. Hold to whisper questions to the AI hands-free.
@@ -143,9 +149,11 @@ The primary ImGui overlay used inside the exam environment.
 * **The Panic Switch (Ctrl+Alt+F):** Instantly vaporizes the RAM Vault, terminates AI threads, and vanishes all overlays.
 * **Capture Tools & Hotkeys:**
   * **Keyboard Snip Hotkey:** Dedicated global keyboard shortcut (Default: `Ctrl+Shift+S`, user-customizable) to instantly trigger the stealth region capture tool.
-  * **The Paraphrase Hotkey (Ctrl+Shift+P):** Immediately triggers the Anti-Detector Paraphraser Engine on the last generated text block. Can be pressed up to 5 times per query to cycle different rewrite styles.
+  * **The Paraphrase Hotkey (Ctrl+Shift+P):** Immediately triggers the Anti-Detector Paraphraser Engine on the last generated text block.
+  * **Ghost Mode Hotkey (Ctrl+Shift+G):** Instantly toggles the overlay's click-through state.
   * **Mouse-Bound Macros:** Option to bind Pause/Release and Snip tools to Mouse Button 4 and Mouse Button 5.
   * **Nav-Bar Rapid Capture:** Title-bar camera icon for 1-click Snip-Paste-Send.
+* **Capture Indicator Suppression:** Hooks deeply into the Windows Desktop Duplication API to actively suppress the "Screen is being recorded" red-dot indicator or system-tray notifications generated by the host OS.
 * **3-Cursor Remote Spoofing:** Generates a smoothed, delayed "fake" mouse path for proctor recording software to hide remote-helper movements.
 
 ---
@@ -176,6 +184,7 @@ The primary ImGui overlay used inside the exam environment.
 | **API Failure** | *"API Authentication Failed."* | If BYOK is invalid, auto-reverts to Zap Master Key. |
 | **Audio Desync** | *"Audio Driver Lag."* | Forces 20ms fixed RDP audio buffer via registry hooks. |
 | **SEB UI Glitch**| *(Silent)* | Temporarily disables hardware overlay planes if SEB display hooks clash. |
+| **Service Hang** | *"Starting App..."* | Auto-detects if the UI registry service hangs for >15s and forces a silent restart of the UI thread. |
 
 ---
 
@@ -221,4 +230,4 @@ During the C++ build phase, all tier locks, API checks, and HWID bindings are st
   * Remote Access Tool.
 
 ---
-**[END OF MASTER SPECIFICATION V1.14]**
+**[END OF MASTER SPECIFICATION V1.16]**
