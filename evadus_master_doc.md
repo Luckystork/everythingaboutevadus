@@ -1,6 +1,6 @@
 # ZAP: COMPLETE ENGINEERING & ARCHITECTURE SPECIFICATION
-**Version:** 1.13 (The Flawless Master Blueprint - UI, Stealth, UX, Network, OpenRouter Backend, & Bare-Metal Engineering)
-**Target:** 2026 Advanced Proctoring Bypasses (Respondus, SEB, Pearson, ProctorU, Canvas, Bluebook, etc.)
+**Version:** 1.14 (The Final Blueprint - UI, Stealth, UX, Network, OpenRouter Backend, & Bare-Metal Engineering)
+**Target:** 2026 Advanced Proctoring Bypasses (Respondus, SEB, Pearson, ProctorU, Canvas, Bluebook, Turnitin)
 
 ---
 
@@ -35,6 +35,7 @@ Dead center at the top of the launcher are three wide, high-contrast tabs: `LITE
   * **Cryo-Billing Toggle:** A 1-click button to "Freeze" subscription time during academic breaks.
   * **Global Settings (Opens a Pop-up Modal):**
     * **BYO API Key Manager:** Input fields to locally override Zap's Master Key. Supports: OpenRouter, OpenAI, Anthropic, Gemini, and Local LM Studio IP/Ports.
+    * **API Server Location Routing:** A dropdown to manually force OpenRouter/API traffic through specific regional datacenters (e.g., US-East, EU-Paris, Asia-Tokyo) to minimize latency based on the user's physical location.
     * **Hardware Overrides:** Manual selection for Host Microphone and Host Speaker routing.
     * **App Behaviors:** Toggles for "Launch on Boot," "Minimize to Tray," and "Silent Auto-Updater."
     * **Volatile RAM Vault Toggle:** Forces all screenshots, textbook PDFs, and API keys to be stored in an encrypted temporary folder that exists *only* in RAM. Vaporizes instantly upon app close, leaving zero trace on the disk.
@@ -127,6 +128,7 @@ The primary ImGui overlay used inside the exam environment.
 ### 4.3 UI Features
 * **Drag-and-Drop Capture Cache:** Vertical sidebar history for thumbnails; support for multi-image sending.
 * **Follow-up Input Box:** A dedicated text field at the bottom of the chat to ask the AI follow-up questions about the generated answer.
+* **Anti-Detector Paraphraser Engine:** A dedicated hotkey module that allows the user to instantly rewrite an AI-generated essay or text block to explicitly bypass Turnitin and other academic AI detectors.
 * **Discrete Answer Module:** A tiny, transparent, scrollable box (200x100px) showing *only* final A/B/C/D answers for 2-camera physical room scans.
 * **Markdown Rendering:** Formatted equations, code blocks, and bold text.
 * **Push-to-Talk (PTT) Audio Query:** Bound to a mouse side-button. Hold to whisper questions to the AI hands-free.
@@ -136,11 +138,12 @@ The primary ImGui overlay used inside the exam environment.
 ## 5. STEALTH CONTROLS & HOTKEYS
 * **Master Pause / Release (Ctrl+Alt+C):**
   * **Action:** Physically severs all input to the VM for safe Host OS usage.
-  * **Visual & The Legend Overlay:** The VM window dims 20% and a bold Yellow banner reads: **"ZAP: MOUSE RELEASED"**. Crucially, this paused state renders a clear, on-screen visual legend displaying all active hotkeys (Snip, Hide, Panic, etc.) so the user does not have to memorize them under pressure.
+  * **Visual & The Legend Overlay:** The VM window dims 20% and a bold Yellow banner reads: **"ZAP: MOUSE RELEASED"**. Crucially, this paused state renders a clear, on-screen visual legend displaying all active hotkeys (Snip, Hide, Panic, Paraphrase, etc.) so the user does not have to memorize them under pressure.
   * **Spatial Persistence:** Cursor teleports instantly back to the exact last VM coordinate upon unpausing.
 * **The Panic Switch (Ctrl+Alt+F):** Instantly vaporizes the RAM Vault, terminates AI threads, and vanishes all overlays.
 * **Capture Tools & Hotkeys:**
   * **Keyboard Snip Hotkey:** Dedicated global keyboard shortcut (Default: `Ctrl+Shift+S`, user-customizable) to instantly trigger the stealth region capture tool.
+  * **The Paraphrase Hotkey (Ctrl+Shift+P):** Immediately triggers the Anti-Detector Paraphraser Engine on the last generated text block. Can be pressed up to 5 times per query to cycle different rewrite styles.
   * **Mouse-Bound Macros:** Option to bind Pause/Release and Snip tools to Mouse Button 4 and Mouse Button 5.
   * **Nav-Bar Rapid Capture:** Title-bar camera icon for 1-click Snip-Paste-Send.
 * **3-Cursor Remote Spoofing:** Generates a smoothed, delayed "fake" mouse path for proctor recording software to hide remote-helper movements.
@@ -218,4 +221,4 @@ During the C++ build phase, all tier locks, API checks, and HWID bindings are st
   * Remote Access Tool.
 
 ---
-**[END OF MASTER SPECIFICATION V1.13]**
+**[END OF MASTER SPECIFICATION V1.14]**
