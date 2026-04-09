@@ -1,6 +1,6 @@
 # ZAP: COMPLETE ENGINEERING & ARCHITECTURE SPECIFICATION
-**Version:** 1.16 (The Absolute Final Uncompressed Blueprint)
-**Target:** 2026 Advanced Proctoring Bypasses (Respondus, SEB, Pearson, ProctorU, Canvas, Bluebook, Turnitin, Mercer Mettl, PSI Secure)
+**Version:** 1.17 (The Absolute Final Uncompressed Blueprint)
+**Target:** 2026 Advanced Proctoring Bypasses (Respondus, SEB, Pearson, ProctorU, Canvas, Bluebook, Turnitin, Mercer Mettl, PSI Secure, TAO by OAT, EC-Council/LogMeIn Resolve, Iris Invigilation)
 
 ---
 
@@ -35,12 +35,14 @@ Dead center at the top of the launcher are three wide, high-contrast tabs: `LITE
   * **Live Account Stats:** "AI Requests Used: X/5" (or "Unlimited") and "Total Active Exam Time."
   * **Active Plan Details:** Displays "Basic Plan," "Premium Plan," or "Unlimited Plan."
   * **Cryo-Billing Toggle:** A 1-click button to "Freeze" subscription time during academic breaks.
+  * **Profile Import/Export:** Allows users to save their current custom hotkeys, AI contexts, and hardware overrides as a `.zap` configuration file, and load different profiles instantly for different types of exams.
   * **Global Settings (Opens a Pop-up Modal):**
     * **BYO API Key Manager:** Input fields to locally override Zap's Master Key. Supports: OpenRouter, OpenAI, Anthropic, Gemini, and Local LM Studio IP/Ports.
     * **API Server Location Routing:** A dropdown to manually force OpenRouter/API traffic through specific regional datacenters (e.g., US-East, EU-Paris, Asia-Tokyo) to minimize latency based on the user's physical location.
+    * **Custom Proxy / SOCKS5 Routing:** Input fields for users taking exams on strict campus Wi-Fi networks (e.g., Fortinet) to route Zap's API traffic through a secure proxy, bypassing firewall blocks.
     * **Hardware Overrides:** Manual selection for Host Microphone and Host Speaker routing.
     * **App Behaviors:** Toggles for "Launch on Boot," "Minimize to Tray," and "Silent Auto-Updater."
-    * **Volatile RAM Vault Toggle:** Forces all screenshots, textbook PDFs, and API keys to be stored in an encrypted temporary folder that exists *only* in RAM. Vaporizes instantly upon app close, leaving zero trace on the disk.
+    * **Volatile RAM Vault Toggle:** Forces all screenshots, textbook PDFs, API keys, and Stealth DVR recordings to be stored in an encrypted temporary folder that exists *only* in RAM. Vaporizes instantly upon app close, leaving zero trace on the disk.
     * **Multi-Monitor Ghosting:** Fakes a single-display EDID profile to the OS, allowing a physical second monitor to remain active while proctors see only one screen.
   * **Logout:** Securely terminates the session and wipes temp tokens.
 
@@ -57,7 +59,7 @@ To ensure users know Zap is highly optimized and accessible, the following minim
 ## 2. THE 3-TIER BYPASS MODES (UNIVERSALLY FREE)
 
 ### 2.1 The [LITE] Tab (Browser-Level Stealth)
-**Target:** Screen-share proctors (Canvas, Zoom, standard ProctorU).
+**Target:** Screen-share proctors (Canvas, Zoom, standard ProctorU, Iris Invigilation).
 * **Mechanic:** Injects a hardware-accelerated floating browser using the `WDA_EXCLUDEFROMCAPTURE` API, rendering it physically invisible to any OS-level screen recording or capture.
 * **Settings Panel:**
   * **Home URL:** Input field for default start page (e.g., chatgpt.com).
@@ -69,7 +71,7 @@ To ensure users know Zap is highly optimized and accessible, the following minim
 * **Bug Fixes:** Includes an automated input-buffer wipe to fix the "Sticky Key" bug when tabbing between the exam and the overlay.
 
 ### 2.2 The [CORE] Tab (Behavioral & Process Stealth)
-**Target:** Behavioral AI monitors and process-list scanners.
+**Target:** Behavioral AI monitors and process-list scanners (TAO by OAT).
 * **Mechanic:** Injects stealth logic directly into legitimate Windows processes.
 * **Settings Panel:**
   * **Polymorphic Spoofer:** "Generate New Identity" button to manually rename/hide the Zap process as a random Windows service.
@@ -78,8 +80,9 @@ To ensure users know Zap is highly optimized and accessible, the following minim
     * **Human Error %** slider to inject artificial typos and backspace corrections.
 
 ### 2.3 The [PLUS] Tab (Bare-Metal Kernel Isolation)
-**Target:** Kernel-level lockdown browsers (Respondus, SEB, Pearson OnVUE, Bluebook, PSI Secure).
+**Target:** Kernel-level lockdown browsers (Respondus, SEB, Pearson OnVUE, Bluebook, PSI Secure, EC-Council/LogMeIn Resolve).
 * **Mechanic:** Creates a dual-session bare-metal environment using a custom RDP wrapper.
+* **Hybrid Injection Mode:** A toggle that allows users to securely inject the [LITE] tab's stealth floating browser and the [CORE] tab's biometric typing directly *into* the [PLUS] VM session, allowing all three tiers to operate simultaneously.
 * **Settings Panel:**
   * **"Setup This PC" Button:** When clicked, it launches the standalone **RDP Wrapper Installer** executable. 
     * **Windows Home Fix:** This installer automatically patches the host system's `termsrv.dll` file in System32 to forcefully allow concurrent multi-session RDP hosting, completely bypassing Microsoft's standard Windows Home Edition RDP locks.
@@ -124,6 +127,7 @@ The primary ImGui overlay used inside the exam environment.
 * **Offline Local-LLM Failsafe:** If the proctoring software strictly severs all outbound internet connections, Zap automatically falls back to pinging the local LM Studio IP/Port, allowing full AI capability completely offline.
 * **System Prompt Injection:** User-defined master behavior rules (e.g., "Answer-only mode").
 * **Live Interview Transcription Mode:** A dedicated toggle that establishes a real-time audio pipeline from the host system/microphone directly to the AI, providing live transcription and coding answers for verbal job interviews.
+* **Rapid Fire (Continuous) Mode:** A toggle specifically for fast-paced multiple-choice exams. When active, Zap automatically captures a pre-defined screen region every *X* seconds (user-configurable) and silently queries the AI, feeding a continuous stream of answers to the Discrete Answer Module without the user ever touching the keyboard.
 * **Auto-Text Appending:** Field to automatically attach a prefix (e.g., "Solve this:") to all captures.
 * **Neural Text Sanitization:** Regex filter to strip AI-disclaimers (e.g., "As an AI model...").
 * **Textbook/CV Upload:** Button to attach PDFs for the AI to reference during answers.
@@ -154,6 +158,7 @@ The primary ImGui overlay used inside the exam environment.
   * **Mouse-Bound Macros:** Option to bind Pause/Release and Snip tools to Mouse Button 4 and Mouse Button 5.
   * **Nav-Bar Rapid Capture:** Title-bar camera icon for 1-click Snip-Paste-Send.
 * **Capture Indicator Suppression:** Hooks deeply into the Windows Desktop Duplication API to actively suppress the "Screen is being recorded" red-dot indicator or system-tray notifications generated by the host OS.
+* **Stealth DVR (Local Recording):** A hotkey-triggered, hardware-accelerated local screen recorder that saves directly to the Volatile RAM Vault, bypassing OBS/Game Bar blocks, allowing users to secretly record exams for later study.
 * **3-Cursor Remote Spoofing:** Generates a smoothed, delayed "fake" mouse path for proctor recording software to hide remote-helper movements.
 
 ---
@@ -230,4 +235,4 @@ During the C++ build phase, all tier locks, API checks, and HWID bindings are st
   * Remote Access Tool.
 
 ---
-**[END OF MASTER SPECIFICATION V1.16]**
+**[END OF MASTER SPECIFICATION V1.17]**
