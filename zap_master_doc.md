@@ -1,5 +1,5 @@
 # ZAP: COMPLETE ENGINEERING & ARCHITECTURE SPECIFICATION
-**Version:** 1.35 (The Absolute Final Uncompressed Blueprint)
+**Version:** 1.40 (The Absolute Final Uncompressed Blueprint)
 **Target:** 2026 Advanced Proctoring Bypasses (Respondus, SEB, Pearson, ProctorU, Canvas, Bluebook, Turnitin, Mercer Mettl, PSI Secure, TAO by OAT, EC-Council/LogMeIn Resolve, Iris Invigilation, Moodle, ProctorExam.com, Testpad)
 
 ---
@@ -53,7 +53,8 @@ To ensure users know Zap is highly optimized and accessible, the following minim
 * **OS:** Windows 10 or Windows 11 (64-bit) (Home or Pro Edition).
   * **Tiny10 / Tiny11 Support:** Zap natively packs the required legacy `.dll` dependencies to run flawlessly on stripped-down, custom Windows ISOs to save RAM.
   * *(Note: Native Mac compatibility is not supported directly, but works flawlessly via Parallels Windows 11 ARM VM).*
-* **Processor:** Intel Core i3 / AMD Ryzen 3 or higher (Basic multi-core processor).
+* **Processor:** Intel Core i3 / AMD Ryzen 3 or higher. 
+  * **AMD Nested-Virtualization Fallback:** Zap dynamically detects if an older AMD CPU has nested-virtualization locked in the BIOS. If detected, it automatically switches to a lightweight software emulation mode to prevent VM crashing, guaranteeing compatibility across all modern silicon.
 * **RAM:** 8GB minimum (16GB recommended for smooth PLUS bare-metal allocation).
 * **GPU:** Integrated graphics (iGPU) are fully supported. No dedicated graphics card required.
 * **Storage:** Less than 500MB of available disk space.
@@ -93,7 +94,8 @@ To ensure users know Zap is highly optimized and accessible, the following minim
 * **Settings Panel:**
   * **"Setup This PC" Button:** When clicked, it launches the standalone **RDP Wrapper Installer** executable. 
     * **Windows Home Fix:** This installer automatically patches the host system's `termsrv.dll` file in System32 to forcefully allow concurrent multi-session RDP hosting, completely bypassing Microsoft's standard Windows Home Edition RDP locks.
-  * **Adaptive Resolution & Rendering:** Toggles for "Host Fullscreen" vs. "Custom X/Y" with free aspect ratio stretching for ultra-wide monitors. Includes a "Hardware GPU Acceleration" sub-toggle and an **"Anti-Tearing / V-Sync Passthrough"** toggle to prevent the visual "Matrix" glitching and fullscreen lagging inside the VM. Includes support for spanning the VM across physical multi-monitor setups.
+  * **Adaptive Resolution & Rendering:** Toggles for "Host Fullscreen" vs. "Custom X/Y" with free aspect ratio stretching for ultra-wide monitors. Includes a "Hardware GPU Acceleration" sub-toggle and an **"Anti-Tearing / V-Sync Passthrough"** toggle to prevent the visual "Matrix" glitching and fullscreen lagging inside the VM. 
+    * **DirectX Exclusive Fullscreen Override (The Popup Fix):** Explicitly forces the RDP session to seize D3D fullscreen priority, completely fixing the bug where the VM gets stuck as a floating "Popup Window" and fails to capture the display. Includes support for spanning the VM across physical multi-monitor setups.
   * **Hardware Passthrough & Dual-Camera Multiplexing:** Dropdown to route the raw physical IDs of the Host Microphone and Webcam into the VM. 
     * **Native USB-over-IP Tunnel:** Eliminates the need for paid third-party apps like VirtualHere. Zap natively emulates physical USB hubs to perfectly pass modern webcams directly into the VM.
     * **Dual-Camera Support:** Actively multiplexes up to two physical webcams (e.g., laptop cam + external room-scan cam) simultaneously to bypass advanced 2-camera proctoring requirements.
@@ -223,7 +225,7 @@ During the C++ build phase, all tier locks, API checks, and HWID bindings are st
 ### 8.2 Web-First Purchasing Architecture
 * **Purchase Flow:** Users create accounts and purchase subscriptions entirely on the Zap Website. 
 * **Cryptocurrency / Monero (XMR) Gateway:** Native support for private, decentralized crypto payments to ensure absolute buyer anonymity.
-* **App Sync:** The Zap desktop app contains NO payment processing UI. Upon login, the app hits the `api.zap.com/v1/auth` endpoint to retrieve the user's active tier and sets the internal state.
+* **App Sync & JWT Token Auto-Repair:** The Zap desktop app contains NO payment processing UI. Upon login, the app hits the `api.zap.com/v1/auth` endpoint to retrieve the user's active tier. Includes a background validator that silently re-authenticates the user if the local session token desyncs, completely eliminating the "Still asking for subscription" bug.
 
 ### 8.3 Subscription Tiers (AI & Usage Caps)
 *Note: All Bypass mechanisms (LITE, CORE, PLUS) are completely free. Users pay strictly for AI bandwidth and features.*
@@ -256,4 +258,4 @@ During the C++ build phase, all tier locks, API checks, and HWID bindings are st
   * Remote Access Tool.
 
 ---
-**[END OF MASTER SPECIFICATION V1.35]**
+**[END OF MASTER SPECIFICATION V1.40]**
