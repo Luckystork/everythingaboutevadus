@@ -1,6 +1,6 @@
 # ZAP: COMPLETE ENGINEERING & ARCHITECTURE SPECIFICATION
-**Version:** 1.30 (The Absolute Final Uncompressed Blueprint)
-**Target:** 2026 Advanced Proctoring Bypasses (Respondus, SEB, Pearson, ProctorU, Canvas, Bluebook, Turnitin, Mercer Mettl, PSI Secure, TAO by OAT, EC-Council/LogMeIn Resolve, Iris Invigilation, ProctorExam.com, Testpad)
+**Version:** 1.35 (The Absolute Final Uncompressed Blueprint)
+**Target:** 2026 Advanced Proctoring Bypasses (Respondus, SEB, Pearson, ProctorU, Canvas, Bluebook, Turnitin, Mercer Mettl, PSI Secure, TAO by OAT, EC-Council/LogMeIn Resolve, Iris Invigilation, Moodle, ProctorExam.com, Testpad)
 
 ---
 
@@ -63,14 +63,14 @@ To ensure users know Zap is highly optimized and accessible, the following minim
 ## 2. THE 3-TIER BYPASS MODES (UNIVERSALLY FREE)
 
 ### 2.1 The [LITE] Tab (Browser-Level Stealth)
-**Target:** Screen-share proctors (Canvas, Zoom, standard ProctorU, Iris Invigilation, Testpad).
+**Target:** Screen-share proctors (Canvas, Moodle, Zoom, standard ProctorU, Iris Invigilation, Testpad).
 * **Mechanic:** Injects a hardware-accelerated floating browser using the `WDA_EXCLUDEFROMCAPTURE` API, rendering it physically invisible to any OS-level screen recording or capture.
 * **Settings Panel:**
   * **Home URL:** Input field for default start page (e.g., chatgpt.com).
   * **Opacity Slider:** 0% to 100% dynamic transparency.
   * **Window Scale:** Resizing percentage for the overlay.
   * **Stealth Visibility Keybinds:** Custom hotkey to vanish/show the browser instantly.
-* **Canvas DOM Vulnerability Fix:** Injects a lightweight JS payload into the exam browser that freezes `window.onblur` and `document.visibilityState`. Forces the exam to always think it is the active window, bypassing tab-tracking.
+* **Canvas & Moodle DOM Vulnerability Fix (Telemetry Scrubber):** Injects a lightweight JS payload into the exam browser that freezes `window.onblur` and `document.visibilityState`. Furthermore, it intercepts and neutralizes `mouseleave` and `mouseout` events natively in the browser, completely blinding Moodle and Iris Invigilation to the cursor exiting the exam frame.
 * **LITE Watchdog Auto-Relauncher:** If aggressive proctoring software manages to send a "kill" command to the invisible overlay, a hidden kernel-level watchdog instantly respawns the Zap UI in its exact previous state in under 5 milliseconds.
 * **Global Drag-and-Drop:** Captures physical file drags (PDFs, images) from the host OS and routes them directly into the invisible browser instance.
 * **Bug Fixes:** Includes an automated input-buffer wipe to fix the "Sticky Key" bug when tabbing between the exam and the overlay.
@@ -116,6 +116,7 @@ Designed to provide a secure, proctor-invisible portal for remote helpers. Acces
   * **Password Field:** Displays a temporary, session-based passcode.
   * **Connection Toggle:** Large button to initiate/terminate the WebSocket handshake.
 * **Integrated Helper AI:** A dedicated side-panel containing Zap's AI chat interface. The remote helper can silently query the API directly from their own dashboard, utilizing the student's API quota without needing external tabs.
+* **Kernel-Level HID Emulation (The Mercer Mettl Bypass):** Instead of using standard Windows APIs to inject remote clicks (which Mercer Mettl detects as synthetic), Zap installs a stealth virtual KMDF (Kernel-Mode Driver Framework) mouse and keyboard. The remote helper's keystrokes and mouse movements register identically to physical hardware interrupts at the OS ring-0 level.
 * **Bypass:** Operates entirely through Zap's process-ghosting, making it invisible to proctoring software that specifically flags AnyDesk, TeamViewer, or Chrome Remote Desktop.
 * **Proctor-Priority Input Override:** If a live proctor takes control of the student's mouse, physical movement on the host machine instantly suspends the remote helper's input for 10 seconds to prevent "cursor fighting."
 * **Full Input Passthrough:** Explicitly encodes and transmits mouse-wheel scroll events and modifier keys (Ctrl/Shift) via the WebSocket to ensure the remote helper has native 1:1 control.
@@ -138,7 +139,7 @@ The primary ImGui overlay used inside the exam environment.
 * **Omni-Model Quick Cycle:** A keyboard shortcut to cycle through the user's custom list of LLMs instantly without opening the dropdown.
 * **OpenRouter Auto-Mode (Dynamic Routing):** A powerful toggle that allows OpenRouter's native auto-routing algorithm to decide which model to use. It dynamically analyzes the user's prompt and sends it to the most capable, cost-effective model for the task.
 * **Offline Local-LLM Failsafe:** If the proctoring software strictly severs all outbound internet connections, Zap automatically falls back to pinging the local LM Studio IP/Port, allowing full AI capability completely offline.
-* **System Prompt Injection:** User-defined master behavior rules (e.g., "Answer-only mode").
+* **Cloud-Synced Prompt Jailbreaks:** Zap automatically connects to our secure backend repository to pull down the latest, highly-specialized "System Prompts" for different types of exams (e.g., "Medical Board Strict Formatting" or "Python Code-Only Output"), saving the user from writing complex instructions under pressure.
 * **Live Interview Transcription Mode:** A dedicated toggle that establishes a real-time audio pipeline from the host system/microphone directly to the AI, providing live transcription and coding answers for verbal job interviews.
 * **Rapid Fire (Continuous) Mode:** A toggle specifically for fast-paced multiple-choice exams. When active, Zap automatically captures a pre-defined screen region every *X* seconds (user-configurable) and silently queries the AI, feeding a continuous stream of answers to the Discrete Answer Module without the user ever touching the keyboard.
 * **Auto-Text Appending:** Field to automatically attach a prefix (e.g., "Solve this:") to all captures.
@@ -164,7 +165,7 @@ The primary ImGui overlay used inside the exam environment.
   * **Visual & The Legend Overlay:** The VM window dims 20% and a bold Yellow banner reads: **"ZAP: MOUSE RELEASED"**. Crucially, this paused state renders a clear, on-screen visual legend displaying all active hotkeys (Snip, Hide, Panic, Paraphrase, etc.) so the user does not have to memorize them under pressure.
   * **Spatial Persistence:** Cursor teleports instantly back to the exact last VM coordinate upon unpausing.
 * **The Panic Switch:** Instantly vaporizes the RAM Vault, terminates AI threads, and vanishes all overlays.
-* **Advanced Key & Mouse Binding Engine:** * Every function (Pause, Panic, Snip, Hide, Paraphrase) can be bound to standard keyboard combinations (e.g., `Ctrl+Alt+C`, `Ctrl+Alt+F`) *or* to physical mouse side-buttons (Mouse4/Mouse5) for instantaneous, one-handed activation.
+* **Advanced Key & Mouse Binding Engine:** Every function (Pause, Panic, Snip, Hide, Paraphrase) can be bound to standard keyboard combinations (e.g., `Ctrl+Alt+C`, `Ctrl+Alt+F`) *or* to physical mouse side-buttons (Mouse4/Mouse5) for instantaneous, one-handed activation.
 * **Capture Tools & Hotkeys:**
   * **Keyboard Snip Hotkey:** User-customizable global shortcut to instantly trigger the stealth region capture tool.
   * **The Auto-Clipboard Sanitizer:** Directly post-snip, Zap actively wipes the Windows clipboard in sub-10 milliseconds to prevent SEB/Mercer Mettl from detecting the image in the system memory.
@@ -255,4 +256,4 @@ During the C++ build phase, all tier locks, API checks, and HWID bindings are st
   * Remote Access Tool.
 
 ---
-**[END OF MASTER SPECIFICATION V1.30]**
+**[END OF MASTER SPECIFICATION V1.35]**
