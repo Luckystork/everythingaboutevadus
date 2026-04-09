@@ -1,5 +1,5 @@
 # ZAP: COMPLETE ENGINEERING & ARCHITECTURE SPECIFICATION
-**Version:** 1.25 (The Absolute Final Uncompressed Blueprint)
+**Version:** 1.30 (The Absolute Final Uncompressed Blueprint)
 **Target:** 2026 Advanced Proctoring Bypasses (Respondus, SEB, Pearson, ProctorU, Canvas, Bluebook, Turnitin, Mercer Mettl, PSI Secure, TAO by OAT, EC-Council/LogMeIn Resolve, Iris Invigilation, ProctorExam.com, Testpad)
 
 ---
@@ -45,7 +45,7 @@ Dead center at the top of the launcher are three wide, high-contrast tabs: `LITE
     * **Version Rollback Engine:** A 1-click "Downgrade to Previous Version" button. If a new silent auto-update breaks Zap on the user's specific hardware right before an exam, they can instantly revert to the last stable build.
     * **App Behaviors:** Toggles for "Launch on Boot," "Minimize to Tray," and "Silent Auto-Updater."
     * **Volatile RAM Vault Toggle:** Forces all screenshots, textbook PDFs, API keys, and Stealth DVR recordings to be stored in an encrypted temporary folder that exists *only* in RAM. Vaporizes instantly upon app close, leaving zero trace on the disk. Includes a manual **"Export to USB"** button to safely dump the vault contents to a physical drive before the app closes.
-    * **Multi-Monitor Ghosting:** Fakes a single-display EDID profile to the OS, allowing a physical second monitor to remain active while proctors see only one screen.
+    * **Multi-Monitor Ghosting & Isolation:** Fakes a single-display EDID profile to the OS, allowing a physical second monitor to remain active while proctors see only one screen. Also includes an isolation toggle to force the [PLUS] VM onto Display 1 while unlocking Display 2 purely for the Host OS.
   * **Logout:** Securely terminates the session and wipes temp tokens.
 
 ### 1.5 System & Device Requirements
@@ -93,9 +93,11 @@ To ensure users know Zap is highly optimized and accessible, the following minim
 * **Settings Panel:**
   * **"Setup This PC" Button:** When clicked, it launches the standalone **RDP Wrapper Installer** executable. 
     * **Windows Home Fix:** This installer automatically patches the host system's `termsrv.dll` file in System32 to forcefully allow concurrent multi-session RDP hosting, completely bypassing Microsoft's standard Windows Home Edition RDP locks.
-  * **Adaptive Resolution & Rendering:** Toggles for "Host Fullscreen" vs. "Custom X/Y" with free aspect ratio stretching for ultra-wide monitors. Includes a "Hardware GPU Acceleration" sub-toggle and an **"Anti-Tearing / V-Sync Passthrough"** toggle to prevent the visual "Matrix" glitching and fullscreen lagging inside the VM.
-  * **Hardware Passthrough:** Dropdown to route the raw physical IDs of the Host Microphone and Webcam into the VM. Includes a **"Force-Refresh USB Cache"** button to fix the Evadus bug where cameras fail to show up in the list.
-    * **Native USB-over-IP Tunnel:** Eliminates the need for paid third-party apps like VirtualHere. Zap natively emulates physical USB hubs to perfectly pass modern webcams and proprietary devices directly into the VM.
+  * **Adaptive Resolution & Rendering:** Toggles for "Host Fullscreen" vs. "Custom X/Y" with free aspect ratio stretching for ultra-wide monitors. Includes a "Hardware GPU Acceleration" sub-toggle and an **"Anti-Tearing / V-Sync Passthrough"** toggle to prevent the visual "Matrix" glitching and fullscreen lagging inside the VM. Includes support for spanning the VM across physical multi-monitor setups.
+  * **Hardware Passthrough & Dual-Camera Multiplexing:** Dropdown to route the raw physical IDs of the Host Microphone and Webcam into the VM. 
+    * **Native USB-over-IP Tunnel:** Eliminates the need for paid third-party apps like VirtualHere. Zap natively emulates physical USB hubs to perfectly pass modern webcams directly into the VM.
+    * **Dual-Camera Support:** Actively multiplexes up to two physical webcams (e.g., laptop cam + external room-scan cam) simultaneously to bypass advanced 2-camera proctoring requirements.
+    * Includes a **"Force-Refresh USB Cache"** button to fix the Evadus bug where cameras fail to show up in the list.
   * **GPU Driver & Gamma Bypass Toggle:** Kernel-level hooks to spoof GPU signatures and defeat advanced color-monitoring detection.
   * **Dynamic Resource & Firmware Allocation:** Input fields to manually specify CPU Core Count, RAM allocation, and a button to **"Clone Host SMBIOS/MAC Address"** so the VM perfectly mimics the Host PC's hardware fingerprint to bypass deep forensic checks.
   * **Deep Registry Hypervisor Spoofer (Respondus Fix):** Actively scrubs and renames `HKEY_LOCAL_MACHINE\HARDWARE\DESCRIPTION\System` registry keys. If it detects "VMware", "QEMU", or "VirtualBox" strings, it rewrites them to match generic Dell/HP manufacturer IDs before the lockdown browser launches.
@@ -113,6 +115,7 @@ Designed to provide a secure, proctor-invisible portal for remote helpers. Acces
   * **ID Field:** Displays the user's secure connection ID.
   * **Password Field:** Displays a temporary, session-based passcode.
   * **Connection Toggle:** Large button to initiate/terminate the WebSocket handshake.
+* **Integrated Helper AI:** A dedicated side-panel containing Zap's AI chat interface. The remote helper can silently query the API directly from their own dashboard, utilizing the student's API quota without needing external tabs.
 * **Bypass:** Operates entirely through Zap's process-ghosting, making it invisible to proctoring software that specifically flags AnyDesk, TeamViewer, or Chrome Remote Desktop.
 * **Proctor-Priority Input Override:** If a live proctor takes control of the student's mouse, physical movement on the host machine instantly suspends the remote helper's input for 10 seconds to prevent "cursor fighting."
 * **Full Input Passthrough:** Explicitly encodes and transmits mouse-wheel scroll events and modifier keys (Ctrl/Shift) via the WebSocket to ensure the remote helper has native 1:1 control.
@@ -252,4 +255,4 @@ During the C++ build phase, all tier locks, API checks, and HWID bindings are st
   * Remote Access Tool.
 
 ---
-**[END OF MASTER SPECIFICATION V1.25]**
+**[END OF MASTER SPECIFICATION V1.30]**
