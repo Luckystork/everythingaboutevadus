@@ -1,6 +1,6 @@
 # ZAP: COMPLETE ENGINEERING & ARCHITECTURE SPECIFICATION
-**Version:** 1.18 (The Absolute Final Uncompressed Blueprint)
-**Target:** 2026 Advanced Proctoring Bypasses (Respondus, SEB, Pearson, ProctorU, Canvas, Bluebook, Turnitin, Mercer Mettl, PSI Secure, TAO by OAT, EC-Council/LogMeIn Resolve, Iris Invigilation)
+**Version:** 1.19 (The Absolute Final Uncompressed Blueprint)
+**Target:** 2026 Advanced Proctoring Bypasses (Respondus, SEB, Pearson, ProctorU, Canvas, Bluebook, Turnitin, Mercer Mettl, PSI Secure, TAO by OAT, EC-Council/LogMeIn Resolve, Iris Invigilation, ProctorExam.com, Testpad)
 
 ---
 
@@ -26,21 +26,23 @@ Dead center at the top of the launcher are three wide, high-contrast tabs: `LITE
   * `PLUS` = Zap Electric Yellow (`#D4FF00`)
 
 ### 1.4 The Command Hub (Top-Right Corner)
-* **Status Shield:** A glowing shield icon next to the profile. 
+* **Status Shield & API Health:** A glowing shield icon next to the profile. 
   * `[INACTIVE]` (Grey/Dimmed) by default.
   * `[READY]` (Active Accent Color) when the bypass/wrapper is successfully hooked.
+  * **Live API Health Dot:** A tiny LED indicator next to the shield (Green/Yellow/Red) showing the real-time server latency and uptime of OpenRouter, so users immediately know if AI generation delays are server-side or local.
 * **Remote Assist Toggle (The Broadcast Icon):** A dedicated icon next to the shield. Clicking this opens the standalone **Remote Screenshare Hub** (See Section 3), allowing users to instantly generate a session ID for a remote helper regardless of which tab they are currently using.
 * **The User Profile Icon:** A circular avatar. Clicking it opens the Master Dropdown Menu:
   * **User Identity:** Displays the logged-in Email and a unique alphanumeric Zap ID.
   * **Live Account Stats:** "AI Requests Used: X/5" (or "Unlimited") and "Total Active Exam Time."
   * **Active Plan Details:** Displays "Basic Plan," "Premium Plan," or "Unlimited Plan."
   * **Cryo-Billing Toggle:** A 1-click button to "Freeze" subscription time during academic breaks.
-  * **Profile Import/Export:** Allows users to save their current custom hotkeys, AI contexts, and hardware overrides as a `.zap` configuration file, and load different profiles instantly for different types of exams.
+  * **Profile Import/Export:** Allows users to save their current custom hotkeys, AI contexts, and hardware overrides as a `.zap` configuration file, and load different profiles instantly for different types of exams. Explicitly ensures that **USB Passthrough States** are permanently saved so users don't have to re-configure their webcams every reboot.
   * **Global Settings (Opens a Pop-up Modal):**
     * **BYO API Key Manager:** Input fields to locally override Zap's Master Key. Supports: OpenRouter, OpenAI, Anthropic, Gemini, and Local LM Studio IP/Ports.
     * **API Server Location Routing:** A dropdown to manually force OpenRouter/API traffic through specific regional datacenters (e.g., US-East, EU-Paris, Asia-Tokyo) to minimize latency based on the user's physical location.
     * **Custom Proxy / SOCKS5 Routing:** Input fields for users taking exams on strict campus Wi-Fi networks (e.g., Fortinet) to route Zap's API traffic through a secure proxy, bypassing firewall blocks.
     * **Hardware Overrides:** Manual selection for Host Microphone and Host Speaker routing.
+    * **Version Rollback Engine:** A 1-click "Downgrade to Previous Version" button. If a new silent auto-update breaks Zap on the user's specific hardware right before an exam, they can instantly revert to the last stable build.
     * **App Behaviors:** Toggles for "Launch on Boot," "Minimize to Tray," and "Silent Auto-Updater."
     * **Volatile RAM Vault Toggle:** Forces all screenshots, textbook PDFs, API keys, and Stealth DVR recordings to be stored in an encrypted temporary folder that exists *only* in RAM. Vaporizes instantly upon app close, leaving zero trace on the disk.
     * **Multi-Monitor Ghosting:** Fakes a single-display EDID profile to the OS, allowing a physical second monitor to remain active while proctors see only one screen.
@@ -61,7 +63,7 @@ To ensure users know Zap is highly optimized and accessible, the following minim
 ## 2. THE 3-TIER BYPASS MODES (UNIVERSALLY FREE)
 
 ### 2.1 The [LITE] Tab (Browser-Level Stealth)
-**Target:** Screen-share proctors (Canvas, Zoom, standard ProctorU, Iris Invigilation).
+**Target:** Screen-share proctors (Canvas, Zoom, standard ProctorU, Iris Invigilation, Testpad).
 * **Mechanic:** Injects a hardware-accelerated floating browser using the `WDA_EXCLUDEFROMCAPTURE` API, rendering it physically invisible to any OS-level screen recording or capture.
 * **Settings Panel:**
   * **Home URL:** Input field for default start page (e.g., chatgpt.com).
@@ -82,13 +84,13 @@ To ensure users know Zap is highly optimized and accessible, the following minim
     * **Human Error %** slider to inject artificial typos and backspace corrections.
 
 ### 2.3 The [PLUS] Tab (Bare-Metal Kernel Isolation)
-**Target:** Kernel-level lockdown browsers (Respondus, SEB, Pearson OnVUE, Bluebook, PSI Secure, EC-Council/LogMeIn Resolve).
+**Target:** Kernel-level lockdown browsers (Respondus, SEB, Pearson OnVUE, Bluebook, PSI Secure, EC-Council/LogMeIn Resolve, ProctorExam).
 * **Mechanic:** Creates a dual-session bare-metal environment using a custom RDP wrapper.
 * **Hybrid Injection Mode:** A toggle that allows users to securely inject the [LITE] tab's stealth floating browser and the [CORE] tab's biometric typing directly *into* the [PLUS] VM session, allowing all three tiers to operate simultaneously.
 * **Settings Panel:**
   * **"Setup This PC" Button:** When clicked, it launches the standalone **RDP Wrapper Installer** executable. 
     * **Windows Home Fix:** This installer automatically patches the host system's `termsrv.dll` file in System32 to forcefully allow concurrent multi-session RDP hosting, completely bypassing Microsoft's standard Windows Home Edition RDP locks.
-  * **Adaptive Resolution:** Toggles for "Host Fullscreen" vs. "Custom X/Y" with free aspect ratio stretching for ultra-wide monitors. Includes a "Hardware GPU Acceleration" sub-toggle to prevent fullscreen lagging.
+  * **Adaptive Resolution & Rendering:** Toggles for "Host Fullscreen" vs. "Custom X/Y" with free aspect ratio stretching for ultra-wide monitors. Includes a "Hardware GPU Acceleration" sub-toggle and an **"Anti-Tearing / V-Sync Passthrough"** toggle to prevent the visual "Matrix" glitching and fullscreen lagging inside the VM.
   * **Hardware Passthrough:** Dropdown to route the raw physical IDs of the Host Microphone and Webcam into the VM. Includes a **"Force-Refresh USB Cache"** button to fix the Evadus bug where cameras fail to show up in the list.
     * **Native USB-over-IP Tunnel:** Eliminates the need for paid third-party apps like VirtualHere. Zap natively emulates physical USB hubs to perfectly pass modern webcams and proprietary devices directly into the VM.
   * **GPU Driver & Gamma Bypass Toggle:** Kernel-level hooks to spoof GPU signatures and defeat advanced color-monitoring detection.
@@ -119,7 +121,7 @@ The primary ImGui overlay used inside the exam environment.
 
 ### 4.1 UI Placement & Accessibility
 * **Default State:** Anchored vertically to the right side of the screen.
-* **Compact Mode (Stealth Anchor):** Clicking the minimize dash collapses the entire UI into a tiny 50x50px floating pill. Expanding it restores the exact previous state.
+* **Compact Mode (Stealth Anchor):** Clicking the minimize dash collapses the entire UI into a tiny 50x50px floating pill. Expanding it restores the exact previous state. Includes a dedicated keyboard shortcut (`Ctrl+Shift+M`) to instantly toggle this collapse.
 * **Click-Through "Ghost" Mode:** A UI toggle (and hotkey) that locks the overlay visually on screen but makes it completely un-clickable. All mouse events pass *through* the overlay directly into the exam software underneath, ensuring it never blocks "Submit" or "Next" buttons.
 * **Persistent UI Memory:** Remembers X/Y position, scaling, and opacity across all sessions and reboots.
 
@@ -159,6 +161,7 @@ The primary ImGui overlay used inside the exam environment.
   * **The Auto-Clipboard Sanitizer:** Directly post-snip, Zap actively wipes the Windows clipboard in sub-10 milliseconds to prevent SEB/Mercer Mettl from detecting the image in the system memory.
   * **The Paraphrase Hotkey (Ctrl+Shift+P):** Immediately triggers the Anti-Detector Paraphraser Engine on the last generated text block.
   * **Ghost Mode Hotkey (Ctrl+Shift+G):** Instantly toggles the overlay's click-through state.
+  * **Quick Minimize Hotkey (Ctrl+Shift+M):** Instantly collapses the AI UI into the 50x50 pill without using the mouse.
   * **Extended HID / Foot Pedal Support:** Explicit API support to map any hotkey directly to F13-F24 bindings, natively supporting generic USB Foot Pedals for fully hands-free interaction.
   * **Nav-Bar Rapid Capture:** Title-bar camera icon for 1-click Snip-Paste-Send.
 * **Capture Indicator Suppression:** Hooks deeply into the Windows Desktop Duplication API to actively suppress the "Screen is being recorded" red-dot indicator or system-tray notifications generated by the host OS.
@@ -212,7 +215,7 @@ During the C++ build phase, all tier locks, API checks, and HWID bindings are st
 *Note: All Bypass mechanisms (LITE, CORE, PLUS) are completely free. Users pay strictly for AI bandwidth and features.*
 
 * **Basic Plan ($0):**
-  * 5 Requests / day. 
+  * 5 Requests / day. *(Includes 1-Time 7-Day Free Trial of Premium upon signup)*
   * 1 Screenshot / Audio clip per request.
   * AI Chat via BYOK (Bring Your Own Key) only.
   * Access to 1 AI Model (Gemini 2.5 Flash Lite).
@@ -239,4 +242,4 @@ During the C++ build phase, all tier locks, API checks, and HWID bindings are st
   * Remote Access Tool.
 
 ---
-**[END OF MASTER SPECIFICATION V1.18]**
+**[END OF MASTER SPECIFICATION V1.19]**
