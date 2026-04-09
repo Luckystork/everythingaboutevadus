@@ -22,6 +22,7 @@ Dead center at the top of the launcher are three wide, high-contrast tabs: `LITE
 * **Status Shield:** A glowing shield icon next to the profile. 
   * `[INACTIVE]` (Grey/Dimmed) by default.
   * `[READY]` (Active Accent Color) when the bypass/wrapper is successfully hooked.
+* **Remote Assist Toggle (The Broadcast Icon):** A dedicated icon next to the shield. Clicking this opens the standalone **Remote Screenshare Hub** (See Section 3), allowing users to instantly generate a session ID for a remote helper regardless of which tab they are currently using.
 * **The User Profile Icon:** A circular avatar. Clicking it opens the Master Dropdown Menu:
   * **User Identity:** Displays the logged-in Email and a unique alphanumeric Zap ID.
   * **Live Account Stats:** "AI Requests Used: X/5" (Real-time counter) and "Total Active Exam Time."
@@ -70,8 +71,8 @@ Dead center at the top of the launcher are three wide, high-contrast tabs: `LITE
 ---
 
 ## 3. REMOTE SCREENSHARE HUB (STEALTH ASSISTANCE)
-Designed to provide a secure, proctor-invisible portal for remote helpers.
-* **Architecture:** A standalone stealth-wrapped window built directly into the Zap kernel.
+Designed to provide a secure, proctor-invisible portal for remote helpers. Accessed globally via the **Broadcast Icon** in the Command Hub.
+* **Architecture:** A standalone stealth-wrapped pop-up window built directly into the Zap kernel.
 * **UI Elements:**
   * **ID Field:** Displays the user's secure connection ID.
   * **Password Field:** Displays a temporary, session-based passcode.
@@ -103,4 +104,37 @@ The primary ImGui overlay used inside the exam environment.
 ## 5. STEALTH CONTROLS & HOTKEYS
 
 * **Master Pause / Release (Ctrl+Alt+C):**
-  * **Action
+  * **Action:** Physically severs all input to the VM for safe Host OS usage.
+  * **Visual:** VM window dims 20%, Yellow banner reads: **"ZAP: MOUSE RELEASED"**.
+  * **Spatial Persistence:** Cursor teleports instantly back to the exact last VM coordinate.
+* **The Panic Switch (Ctrl+Alt+F):** Instantly vanishes all overlays and suspends AI threads.
+* **Mouse-Bound Macros:** Bind Pause/Release and Snip tools to Mouse Button 4 and Mouse Button 5.
+* **Capture Tools:**
+  * **Nav-Bar Rapid Capture:** Title-bar camera icon for 1-click Snip-Paste-Send.
+  * **Region Snip & Full Screen Snip:** Standard stealth capture tools.
+* **3-Cursor Remote Spoofing:** Generates a smoothed, delayed "fake" mouse path for proctor recording software to hide remote-helper movements.
+
+---
+
+## 6. ERROR HANDLING & SUPPORT MATRIX
+
+| Error State | User-Facing Message | Zap Auto-Resolution Logic |
+| :--- | :--- | :--- |
+| **Needs Admin** | *"Admin Rights Required."* | UI displays a 1-click "Restart as Admin" button. |
+| **Unzip Fail** | *"Corrupted Payload."* | Auto-deletes temp folder and re-downloads the installer. |
+| **VM Boot Loop** | *"VM State Corrupted."* | "Nuke & Rebuild VM" button resets session in 10s. |
+| **Hardware Lock**| *"Hardware Locked by Host."* | Prompts user to close conflicting apps (Discord/Zoom). |
+| **API Failure** | *"API Authentication Failed."* | If BYOK is invalid, auto-reverts to Zap Master Key. |
+
+---
+
+## 7. BUSINESS LOGIC
+
+### 7.1 Monetization (Monthly/Annual Only)
+* **Freemium:** 5 free AI requests/day per account.
+* **Subscription Tiers:** * **Monthly Plan:** Recurring unlimited access.
+  * **Annual Plan:** Discounted yearly unlimited access.
+* **Crypto:** Native Monero (XMR) gateway for anonymity.
+
+---
+**[END OF MASTER SPECIFICATION V1.5]**
