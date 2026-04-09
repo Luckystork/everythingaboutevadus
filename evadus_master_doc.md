@@ -1,5 +1,5 @@
 # ZAP: COMPLETE ENGINEERING & ARCHITECTURE SPECIFICATION
-**Version:** 1.10 (The Definitive Uncompressed Blueprint - UI, Stealth, UX, Network, Errors & Monetization)
+**Version:** 1.12 (The Definitive Uncompressed Blueprint - UI, Stealth, UX, Network, OpenRouter Backend, & Hardware Specs)
 **Target:** 2026 Advanced Proctoring Bypasses (Respondus, SEB, Pearson, ProctorU, Canvas, Bluebook, etc.)
 
 ---
@@ -34,12 +34,20 @@ Dead center at the top of the launcher are three wide, high-contrast tabs: `LITE
   * **Active Plan Details:** Displays "Basic Plan," "Premium Plan," or "Unlimited Plan."
   * **Cryo-Billing Toggle:** A 1-click button to "Freeze" subscription time during academic breaks.
   * **Global Settings (Opens a Pop-up Modal):**
-    * **BYO API Key Manager:** Input fields to override Zap's Master Key. Supports: OpenAI, Anthropic, Gemini, OpenRouter, and Local LM Studio IP/Ports.
+    * **BYO API Key Manager:** Input fields to locally override Zap's Master Key. Supports: OpenRouter, OpenAI, Anthropic, Gemini, and Local LM Studio IP/Ports.
     * **Hardware Overrides:** Manual selection for Host Microphone and Host Speaker routing.
     * **App Behaviors:** Toggles for "Launch on Boot," "Minimize to Tray," and "Silent Auto-Updater."
     * **Volatile RAM Vault Toggle:** Forces all screenshots, textbook PDFs, and API keys to be stored in an encrypted temporary folder that exists *only* in RAM. Vaporizes instantly upon app close, leaving zero trace on the disk.
     * **Multi-Monitor Ghosting:** Fakes a single-display EDID profile to the OS, allowing a physical second monitor to remain active while proctors see only one screen.
   * **Logout:** Securely terminates the session and wipes temp tokens.
+
+### 1.5 System & Device Requirements
+To ensure users know Zap is highly optimized and accessible, the following minimum requirements are officially supported:
+* **OS:** Windows 10 or Windows 11 (64-bit).
+* **Processor:** Intel Core i3 / AMD Ryzen 3 or higher (Basic multi-core processor).
+* **RAM:** 8GB minimum (16GB recommended for smooth PLUS bare-metal allocation).
+* **GPU:** Integrated graphics (iGPU) are fully supported. No dedicated graphics card required.
+* **Storage:** Less than 500MB of available disk space.
 
 ---
 
@@ -106,13 +114,13 @@ The primary ImGui overlay used inside the exam environment.
 ### 4.2 AI Intelligence & Dual-Injection Workflow
 * **Omni-Model Selector:** Dropdown for available models based on user tier.
 * **Omni-Model Quick Cycle:** A keyboard shortcut to cycle through LLMs instantly without opening the dropdown.
-* **OpenRouter Auto-Mode:** Automatic task-based routing (identifies Math vs. Writing).
+* **OpenRouter Auto-Mode (Dynamic Routing):** A powerful toggle that allows OpenRouter's native auto-routing algorithm to decide which model to use. It dynamically analyzes the user's prompt and sends it to the most capable, cost-effective model for the task.
 * **System Prompt Injection:** User-defined master behavior rules (e.g., "Answer-only mode").
 * **Auto-Text Appending:** Field to automatically attach a prefix (e.g., "Solve this:") to all captures.
 * **Neural Text Sanitization:** Regex filter to strip AI-disclaimers (e.g., "As an AI model...").
 * **Textbook/CV Upload:** Button to attach PDFs for the AI to reference during answers.
 * **Dual-Injection OCR Method (The Math & Graph Bypass):** * The screen snipping tool captures the image and simultaneously processes it through a local, specialized LaTeX OCR neural network. 
-  * Zap sends the *raw, uncompressed screenshot* directly to the AI's native vision engine (to read graphs and spatial diagrams).
+  * Zap sends the *raw, uncompressed screenshot* directly to the AI's native vision engine.
   * Directly underneath the image, Zap injects the perfectly extracted LaTeX math text to prevent the AI from hallucinating compressed, blurry symbols.
 
 ### 4.3 UI Features
@@ -127,25 +135,29 @@ The primary ImGui overlay used inside the exam environment.
 ## 5. STEALTH CONTROLS & HOTKEYS
 * **Master Pause / Release (Ctrl+Alt+C):**
   * **Action:** Physically severs all input to the VM for safe Host OS usage.
-  * **Visual:** VM window dims 20%, Yellow banner reads: **"ZAP: MOUSE RELEASED"**.
-  * **Spatial Persistence:** Cursor teleports instantly back to the exact last VM coordinate.
+  * **Visual & The Legend Overlay:** The VM window dims 20% and a bold Yellow banner reads: **"ZAP: MOUSE RELEASED"**. Crucially, this paused state renders a clear, on-screen visual legend displaying all active hotkeys (Snip, Hide, Panic, etc.) so the user does not have to memorize them under pressure.
+  * **Spatial Persistence:** Cursor teleports instantly back to the exact last VM coordinate upon unpausing.
 * **The Panic Switch (Ctrl+Alt+F):** Instantly vaporizes the RAM Vault, terminates AI threads, and vanishes all overlays.
-* **Mouse-Bound Macros:** Bind Pause/Release and Snip tools to Mouse Button 4 and Mouse Button 5.
-* **Capture Tools:**
+* **Capture Tools & Hotkeys:**
+  * **Keyboard Snip Hotkey:** Dedicated global keyboard shortcut (Default: `Ctrl+Shift+S`, user-customizable) to instantly trigger the stealth region capture tool.
+  * **Mouse-Bound Macros:** Option to bind Pause/Release and Snip tools to Mouse Button 4 and Mouse Button 5.
   * **Nav-Bar Rapid Capture:** Title-bar camera icon for 1-click Snip-Paste-Send.
-  * **Region Snip & Full Screen Snip:** Standard stealth capture tools.
 * **3-Cursor Remote Spoofing:** Generates a smoothed, delayed "fake" mouse path for proctor recording software to hide remote-helper movements.
 
 ---
 
-## 6. NETWORK, SECURITY & ANTI-CRACK ARCHITECTURE
+## 6. NETWORK, SECURITY & AI ARCHITECTURE
 
-### 6.1 Network Stealth (Domain Fronting)
-* To bypass network traffic analysis (where proctors flag connections to OpenAI or proxy servers), all Zap API calls are domain-fronted to look like standard Windows Telemetry or Microsoft Azure traffic. 
+### 6.1 Master OpenRouter Gateway
+* **Centralized AI Provisioning:** The Zap backend routes all premium/unlimited user requests through a **single Master OpenRouter API Key** managed by the owner.
+* **BYOK Fallback:** If a user is on the Free tier or exhausts their quota, they can input their own OpenRouter key in the Global Settings.
 
-### 6.2 Anti-Crack & HWID Locking
+### 6.2 Network Stealth (Domain Fronting)
+* To bypass network traffic analysis, all Zap API calls are domain-fronted to look like standard Windows Telemetry or Microsoft Azure traffic. 
+
+### 6.3 Anti-Crack & HWID Locking
 * **Hardware ID (HWID) Binding:** Upon login, the user's session token is cryptographically bound to their motherboard and CPU serial numbers. 
-* **Server-Side Validation:** All AI requests and bypass payload injections require a server-side handshake. The software cannot be cracked locally because the core execution keys live on the server.
+* **Server-Side Validation:** All AI requests and bypass payload injections require a server-side handshake.
 
 ---
 
@@ -166,7 +178,7 @@ The primary ImGui overlay used inside the exam environment.
 ## 8. BUSINESS LOGIC & MONETIZATION (API SYNC)
 
 ### 8.1 Local Development Bypasses (Feature Flags)
-During the C++ build phase, all tier locks, API checks, and HWID bindings are strictly disabled via developer flags to allow rapid local testing and compilation without triggering the server anti-piracy logic:
+During the C++ build phase, all tier locks, API checks, and HWID bindings are strictly disabled via developer flags to allow rapid local testing:
 * `#define DEV_UNLOCK_ALL true` (Unlocks all premium AI features/models).
 * `#define DEV_DISABLE_HWID true` (Bypasses motherboard cryptographic locking).
 
@@ -187,7 +199,7 @@ During the C++ build phase, all tier locks, API checks, and HWID bindings are st
 * **Premium Plan ($35/month | $50/year):**
   * Unlimited Requests. 
   * 5 Screenshots / Audio clips per request.
-  * AI Chat (via Gemini Models or BYOK).
+  * AI Chat (Powered by Owner's Master OpenRouter Key).
   * Access to all Gemini Models (3.1 Pro, 2.5 Pro, etc.).
   * Default Additional Context Presets.
   * Customizable Hotkeys.
@@ -197,12 +209,12 @@ During the C++ build phase, all tier locks, API checks, and HWID bindings are st
 * **Unlimited Plan ($60/month | $80/year):**
   * Unlimited Requests. 
   * Unlimited Screenshots / Audio clips per request.
-  * AI Chat (BYOK & Unlimited access to all LLMs).
-  * Access to all flagship AI models (Claude 4.6 Opus, Grok 4, GPT-5.2, Deepseek V3.2 R1).
+  * AI Chat (Powered by Owner's Master OpenRouter Key).
+  * Access to all flagship AI models (Claude 4.6 Opus, Grok 4, GPT-5.2, Deepseek V3.2 R1) & OpenRouter Auto-Mode.
   * Customizable Presets & Context.
   * File Uploads.
   * Unlimited Screensharing.
   * Remote Access Tool.
 
 ---
-**[END OF MASTER SPECIFICATION V1.10]**
+**[END OF MASTER SPECIFICATION V1.12]**
