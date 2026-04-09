@@ -1,5 +1,5 @@
 # ZAP: COMPLETE ENGINEERING & ARCHITECTURE SPECIFICATION
-**Version:** 1.19 (The Absolute Final Uncompressed Blueprint)
+**Version:** 1.20 (The Absolute Final Uncompressed Blueprint)
 **Target:** 2026 Advanced Proctoring Bypasses (Respondus, SEB, Pearson, ProctorU, Canvas, Bluebook, Turnitin, Mercer Mettl, PSI Secure, TAO by OAT, EC-Council/LogMeIn Resolve, Iris Invigilation, ProctorExam.com, Testpad)
 
 ---
@@ -36,7 +36,7 @@ Dead center at the top of the launcher are three wide, high-contrast tabs: `LITE
   * **Live Account Stats:** "AI Requests Used: X/5" (or "Unlimited") and "Total Active Exam Time."
   * **Active Plan Details:** Displays "Basic Plan," "Premium Plan," or "Unlimited Plan."
   * **Cryo-Billing Toggle:** A 1-click button to "Freeze" subscription time during academic breaks.
-  * **Profile Import/Export:** Allows users to save their current custom hotkeys, AI contexts, and hardware overrides as a `.zap` configuration file, and load different profiles instantly for different types of exams. Explicitly ensures that **USB Passthrough States** are permanently saved so users don't have to re-configure their webcams every reboot.
+  * **Profile Import/Export:** Allows users to save their current custom hotkeys, AI contexts, and hardware overrides as a `.zap` configuration file, and load different profiles instantly for different types of exams. Explicitly ensures that **USB Passthrough States** and **Target App Memory** are permanently saved so users don't have to re-configure their webcams or browse for executables every reboot.
   * **Global Settings (Opens a Pop-up Modal):**
     * **BYO API Key Manager:** Input fields to locally override Zap's Master Key. Supports: OpenRouter, OpenAI, Anthropic, Gemini, and Local LM Studio IP/Ports.
     * **API Server Location Routing:** A dropdown to manually force OpenRouter/API traffic through specific regional datacenters (e.g., US-East, EU-Paris, Asia-Tokyo) to minimize latency based on the user's physical location.
@@ -71,14 +71,17 @@ To ensure users know Zap is highly optimized and accessible, the following minim
   * **Window Scale:** Resizing percentage for the overlay.
   * **Stealth Visibility Keybinds:** Custom hotkey to vanish/show the browser instantly.
 * **Canvas DOM Vulnerability Fix:** Injects a lightweight JS payload into the exam browser that freezes `window.onblur` and `document.visibilityState`. Forces the exam to always think it is the active window, bypassing tab-tracking.
+* **LITE Watchdog Auto-Relauncher:** If aggressive proctoring software manages to send a "kill" command to the invisible overlay, a hidden kernel-level watchdog instantly respawns the Zap UI in its exact previous state in under 5 milliseconds.
 * **Global Drag-and-Drop:** Captures physical file drags (PDFs, images) from the host OS and routes them directly into the invisible browser instance.
 * **Bug Fixes:** Includes an automated input-buffer wipe to fix the "Sticky Key" bug when tabbing between the exam and the overlay.
 
 ### 2.2 The [CORE] Tab (Behavioral & Process Stealth)
 **Target:** Behavioral AI monitors and process-list scanners (TAO by OAT).
 * **Mechanic:** Injects stealth logic directly into legitimate Windows processes.
+* **Anti-Color Matching / UI Cloaking:** Actively randomizes the microscopic RGB hex values of the UI borders on every launch to defeat advanced behavioral engines that take screenshots to look for known cheat UI colors.
 * **Settings Panel:**
   * **Polymorphic Spoofer:** "Generate New Identity" button to manually rename/hide the Zap process as a random Windows service.
+  * **Target App Memory:** Remembers the exact executable path of the custom exam software the user last hooked, preventing them from needing to manually browse for it on every launch.
   * **Biometric Typing Engine:** * **Target WPM** slider.
     * **Randomized Delay bounds (ms)** (e.g., 60ms - 150ms).
     * **Human Error %** slider to inject artificial typos and backspace corrections.
@@ -127,7 +130,8 @@ The primary ImGui overlay used inside the exam environment.
 
 ### 4.2 AI Intelligence & Workflow
 * **Omni-Model Selector:** Dropdown for available models based on user tier.
-* **Omni-Model Quick Cycle:** A keyboard shortcut to cycle through LLMs instantly without opening the dropdown.
+* **Custom Cycle List (Pre-select Models):** A settings menu allowing users to checkmark only their preferred AI models (e.g., Claude and Deepseek), so the quick-cycle hotkey only toggles between their favorites instead of the entire list.
+* **Omni-Model Quick Cycle:** A keyboard shortcut to cycle through the user's custom list of LLMs instantly without opening the dropdown.
 * **OpenRouter Auto-Mode (Dynamic Routing):** A powerful toggle that allows OpenRouter's native auto-routing algorithm to decide which model to use. It dynamically analyzes the user's prompt and sends it to the most capable, cost-effective model for the task.
 * **Offline Local-LLM Failsafe:** If the proctoring software strictly severs all outbound internet connections, Zap automatically falls back to pinging the local LM Studio IP/Port, allowing full AI capability completely offline.
 * **System Prompt Injection:** User-defined master behavior rules (e.g., "Answer-only mode").
@@ -182,6 +186,9 @@ The primary ImGui overlay used inside the exam environment.
 ### 6.3 Anti-Crack & HWID Locking
 * **Hardware ID (HWID) Binding:** Upon login, the user's session token is cryptographically bound to their motherboard and CPU serial numbers. 
 * **Server-Side Validation:** All AI requests and bypass payload injections require a server-side handshake.
+
+### 6.4 Proctor Auto-Log Scrubber
+* **Mechanic:** Proctors (like SEB and Respondus) write silent `.log` files to the Windows `%AppData%` and `%ProgramData%` directories during an exam to log VM anomalies. Zap actively hooks file-write operations to these target directories and silently sanitizes/deletes any error traces generated by the bypass before the log is ever uploaded to the testing servers.
 
 ---
 
@@ -242,4 +249,4 @@ During the C++ build phase, all tier locks, API checks, and HWID bindings are st
   * Remote Access Tool.
 
 ---
-**[END OF MASTER SPECIFICATION V1.19]**
+**[END OF MASTER SPECIFICATION V1.20]**
