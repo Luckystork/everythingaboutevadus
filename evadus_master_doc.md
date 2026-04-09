@@ -1,36 +1,37 @@
 # ZAP: COMPLETE ENGINEERING & ARCHITECTURE SPECIFICATION
-**Version:** 1.2 (Definitive UI, Screenshare & Monetization Master)
+**Version:** 1.4 (Final UI, Logic, Screenshare & M4 Dev-Workflow Master)
 **Target:** 2026 Advanced Proctoring Bypasses (Respondus, SEB, Pearson, ProctorU, Bluebook, etc.)
 
 ---
 
 ## 1. THE LAUNCHER (COMMAND CENTER UI/UX)
-The Launcher is a standalone C++ ImGui dashboard. It perfectly mirrors the structural layout of Evadus to ensure zero learning curve for migrating users, but is built with a high-end, zero-latency aesthetic.
+The Launcher is a standalone C++ ImGui dashboard designed for zero-latency performance. It mirrors the structural layout of Evadus to ensure 1:1 familiarity for power users but features a polished, enterprise-grade aesthetic.
 
 ### 1.1 Visual Identity & The Window
-* **The Frame:** A sleek, frameless borderless window. No standard Windows title bars. 
+* **The Frame:** A sleek, frameless borderless window. No standard Windows title bars or borders.
 * **Base Palette:** Obsidian Black (`#0D0D0D`) backgrounds with Charcoal Grey (`#1A1A1A`) floating panels, and Off-White text (`#EDEDED`).
 
 ### 1.2 Top Navigation (The "Chameleon" Tab Layout)
-Dead center at the top of the launcher are three wide tabs: `LITE`, `CORE`, and `PLUS`. 
-* **Dynamic Content Shifting:** Clicking a tab does two things:
-  1. It instantly swaps out the main body of the launcher to display the specific settings for that mode.
-  2. It shifts the accent color of the entire application (toggles, active text, glowing icons) to match the threat level.
-* **Colors:** `LITE` = Electric Cyan (`#00FFFF`), `CORE` = Vivid Purple (`#BF00FF`), `PLUS` = Zap Electric Yellow (`#D4FF00`).
+Dead center at the top of the launcher are three wide, high-contrast tabs: `LITE`, `CORE`, and `PLUS`.
+* **Dynamic Content Shifting:** Clicking a tab swaps the entire main body settings and shifts the accent color of the application:
+* **Colors:** * `LITE` = Electric Cyan (`#00FFFF`)
+  * `CORE` = Vivid Purple (`#BF00FF`)
+  * `PLUS` = Zap Electric Yellow (`#D4FF00`)
 
 ### 1.3 The Command Hub (Top-Right Corner)
-* **Status Shield:** A small shield icon that reads `[INACTIVE]` in grey. When a bypass hooks successfully, it glows in the active tab's accent color and reads `[READY]`.
-* **The User Profile Icon:** A circular avatar. Clicking it opens the Master Dropdown Menu.
-* **Master Dropdown Menu Contents:**
-  * **User Identity:** Displays the logged-in Email and unique Zap ID.
-  * **Live Account Stats:** "AI Requests Used: X/5" (for free users) and "Total Active Exam Time."
-  * **Active Plan Details:** Displays "Free", "Monthly", or "Annual".
-  * **Cryo-Billing Toggle:** A 1-click button to freeze subscription time during academic breaks.
-  * **Global Settings (Opens a pop-up Modal):**
-    * **BYO API Key Manager:** Input fields to override Zap's Master OpenRouter Key. Supports direct keys for: OpenAI, Anthropic, Gemini, OpenRouter, and Local LM Studio IP/Ports.
-    * **Hardware Overrides:** Dropdowns to manually select the default Host Microphone and Host Speaker to be used by the bypass environment.
-    * **App Behaviors:** Toggles for "Launch on Boot", "Minimize to Tray", and "Auto-Update Silent Patcher."
-  * **Logout:** Securely terminates the session.
+* **Status Shield:** A glowing shield icon next to the profile. 
+  * `[INACTIVE]` (Grey/Dimmed) by default.
+  * `[READY]` (Active Accent Color) when the bypass/wrapper is successfully hooked.
+* **The User Profile Icon:** A circular avatar. Clicking it opens the Master Dropdown Menu:
+  * **User Identity:** Displays the logged-in Email and a unique alphanumeric Zap ID.
+  * **Live Account Stats:** "AI Requests Used: X/5" (Real-time counter) and "Total Active Exam Time."
+  * **Active Plan Details:** Displays "Free Trial," "Monthly Subscriber," or "Annual Subscriber."
+  * **Cryo-Billing Toggle:** A 1-click button to "Freeze" subscription time during academic breaks.
+  * **Global Settings (Opens a Pop-up Modal):**
+    * **BYO API Key Manager:** Input fields to override Zap's Master Key. Supports: OpenAI, Anthropic, Gemini, OpenRouter, and Local LM Studio IP/Ports.
+    * **Hardware Overrides:** Manual selection for Host Microphone and Host Speaker routing.
+    * **App Behaviors:** Toggles for "Launch on Boot," "Minimize to Tray," and "Silent Auto-Updater."
+  * **Logout:** Securely terminates the session and wipes temp tokens.
 
 ---
 
@@ -38,102 +39,105 @@ Dead center at the top of the launcher are three wide tabs: `LITE`, `CORE`, and 
 
 ### 2.1 The [LITE] Tab (Browser-Level Stealth)
 **Target:** Screen-share proctors (Canvas, Zoom, standard ProctorU).
-* **Mechanic:** Injects a hardware-accelerated floating browser over the screen using the `WDA_EXCLUDEFROMCAPTURE` Windows API flag, rendering it physically invisible to screen capture.
-* **Settings Displayed on this Tab:**
-  * **Home URL:** Text box to set the default website (e.g., chatgpt.com).
-  * **Opacity Slider:** 0% to 100% dynamic transparency for the floating window.
-  * **Window Scale:** Resize the webview dynamically.
-  * **Stealth Keybinds:** Custom inputs to instantly hide/show the overlay.
-* **Bug Fixes Integrated:** Includes an input-buffer wipe to prevent the infamous "Sticky Key" bug when tabbing between the host exam and the Lite overlay.
+* **Mechanic:** Injects a hardware-accelerated floating browser using the `WDA_EXCLUDEFROMCAPTURE` API, rendering it physically invisible to any OS-level screen recording or capture.
+* **Settings Panel:**
+  * **Home URL:** Input field for default start page (e.g., chatgpt.com).
+  * **Opacity Slider:** 0% to 100% dynamic transparency.
+  * **Window Scale:** Resizing percentage for the overlay.
+  * **Stealth Visibility Keybinds:** Custom hotkey to vanish/show the browser instantly.
+* **Bug Fixes:** Includes an automated input-buffer wipe to fix the "Sticky Key" bug when tabbing between the exam and the overlay.
 
 ### 2.2 The [CORE] Tab (Behavioral & Process Stealth)
 **Target:** Behavioral AI monitors and process-list scanners.
-* **Mechanic:** Injects stealth AI logic directly into legitimate Windows processes.
-* **Settings Displayed on this Tab:**
-  * **Polymorphic Spoofer:** A large "Generate New Identity" button that randomly renames the background process (e.g., `WinSysDaemon.exe` or hides it inside `svchost.exe`).
-  * **Biometric Typing Engine Config:** * **Target WPM (Words Per Minute)** slider.
-    * **Randomized Delay bounds:** Set min/max (e.g., 60ms - 150ms between keystrokes).
-    * **Human Error %:** Slider to inject artificial typos and immediate backspace corrections so the AI typing looks human.
+* **Mechanic:** Injects stealth logic directly into legitimate Windows processes.
+* **Settings Panel:**
+  * **Polymorphic Spoofer:** "Generate New Identity" button to rename/hide the Zap process as a random Windows service (e.g., `svchost_update.exe`).
+  * **Biometric Typing Engine:** * **Target WPM** slider.
+    * **Randomized Delay bounds (ms)** (e.g., 60ms - 150ms).
+    * **Human Error %** slider to inject artificial typos and backspace corrections.
 
 ### 2.3 The [PLUS] Tab (Bare-Metal Kernel Isolation)
 **Target:** Kernel-level lockdown browsers (Respondus, SEB, Pearson OnVUE, Bluebook).
-* **Mechanic:** Creates a dual-session environment using a custom RDP wrapper.
-* **Settings Displayed on this Tab:**
-  * **"Setup This PC" Button:** The primary massive button in the center. Clicking it literally just launches the standalone **RDP Wrapper Installer** executable in the background, configures the registry, and sets up the dual-session environment.
-  * **Adaptive Resolution & Stretch Screen:** Toggles for "Host Fullscreen" or custom X/Y resolutions. Includes free aspect ratio stretching for ultra-wide monitors.
-  * **Hardware Passthrough:** Dropdown routing the raw physical IDs of the Host Microphone and Webcam directly into the VM to defeat virtual driver bans.
-  * **GPU Driver & Gamma Bypass Toggle:** Enables driver-level kernel hooks that spoof GPU signatures to defeat advanced color/gamma-ramp monitoring.
-  * **Interception Monitor:** A live, scrolling terminal log scanning for active proctor executables.
-* **Bug Fixes Integrated:** Replaces the Windows VM "Sign Out" button with a forced "Shutdown" button to prevent session hanging/boot loops.
+* **Mechanic:** Creates a dual-session bare-metal environment using a custom RDP wrapper.
+* **Settings Panel:**
+  * **"Setup This PC" Button:** When clicked, it launches the standalone **RDP Wrapper Installer** executable to configure the registry and environment.
+  * **Adaptive Resolution:** Toggles for "Host Fullscreen" vs. "Custom X/Y" with free aspect ratio stretching for ultra-wide monitors.
+  * **Hardware Passthrough:** Dropdown to route the raw physical IDs of the Host Microphone and Webcam into the VM.
+  * **GPU Driver & Gamma Bypass Toggle:** Kernel-level hooks to spoof GPU signatures and defeat advanced color-monitoring detection.
+  * **Interception Monitor:** A live, scrolling terminal log of detected proctor executables.
+* **Bug Fixes:** Hardcoded override that replaces the VM "Sign Out" button with a "Shutdown" button to prevent session boot loops.
 
 ---
 
-## 3. THE AI ASSISTANT SIDEBAR & UI
-The primary ImGui overlay used during the exam.
-
-### 3.1 AI Intelligence & Routing
-* **Omni-Model Selector:** A top-bar dropdown to instantly hot-swap between: Claude 4.6 Opus, Grok 4, GPT-5.2, and Deepseek V3.2 R1.
-* **OpenRouter Auto-Mode:** System automatically parses the screenshot (Math vs. Essay) and routes it to the most efficient model.
-* **System Prompt Injection:** Define master rules in settings (e.g., "You are an exam solver. Output only the final answer letter. Do not explain.")
-* **Auto-Text Appending:** A field to automatically attach text (e.g., "Solve this:") to every screenshot sent.
-* **Neural Text Sanitization:** A regex filter that automatically deletes phrases like "As an AI language model..." from the UI before the user sees it.
-* **Persona/Textbook Upload:** A button to attach local PDFs/CVs so the AI grounds its answers in specific course material or personal history.
-
-### 3.2 UI Features & Workflow
-* **Drag-and-Drop Capture Cache:** A vertical sidebar history of all recent stealth screenshots. Users can drag multiple thumbnails directly into the chatbox at once.
-* **Discrete Answer Module (2-Camera Mode):** A toggle that shrinks the UI into a tiny, transparent, scrollable box that *only* displays the final answer for extreme-risk physical exams.
-* **1-Click Erase & Copy:** Dedicated buttons on every AI response to copy the text to clipboard or wipe the entire chat history instantly.
-* **Markdown Rendering:** Code blocks and complex math equations render perfectly formatted.
-* **Persistent UI Memory:** The app remembers the exact X/Y position, size, and opacity of the sidebar between launches.
-
-### 3.3 LIVE MODE (Interview Suite)
-* **Real-Time WebSockets:** Opens a persistent connection for remote job interviews.
-* **Audio Transcription:** Captures interviewer audio via system sound/mic and transcribes it into text in real-time.
-* **Pre-Emptive Generation:** AI begins generating the answer before the interviewer finishes their sentence.
-
-### 3.4 REMOTE SCREENSHARE HUB (Stealth Assistance)
-* **Dedicated Screenshare Window:** An independent, stealth-wrapped pop-out window built directly into the Zap architecture, bypassing the need for banned third-party tools (AnyDesk/TeamViewer).
-* **Secure Handshake:** Generates a unique, one-time Connection ID and Passcode to give to a remote tutor/helper.
-* **Invisible Streaming:** Streams the VM and Overlay visual feed securely via WebSockets directly to the remote helper's browser window.
+## 3. REMOTE SCREENSHARE HUB (STEALTH ASSISTANCE)
+Designed to provide a secure, proctor-invisible portal for remote helpers.
+* **Architecture:** A standalone stealth-wrapped window built directly into the Zap kernel.
+* **UI Elements:**
+  * **ID Field:** Displays the user's secure connection ID.
+  * **Password Field:** Displays a temporary, session-based passcode.
+  * **Connection Toggle:** Large button to initiate/terminate the WebSocket handshake.
+* **Bypass:** Operates entirely through Zap's process-ghosting, making it invisible to proctoring software that specifically flags AnyDesk, TeamViewer, or Chrome Remote Desktop.
 
 ---
 
-## 4. STEALTH CONTROLS & HOTKEYS
+## 4. THE AI ASSISTANT SIDEBAR & UI
+The primary ImGui overlay used inside the exam environment.
 
-* **Master Pause / Release (Ctrl+Alt+C):** * **Action:** Physically severs all keyboard and mouse inputs to the Virtual Machine, allowing the user to safely click around their Host OS without accidentally clicking inside the exam.
-  * **Visual Cue:** The VM window dims by 20%, and an Electric Yellow banner drops from the top of the monitor displaying: **"ZAP: MOUSE RELEASED"**.
-  * **Spatial Persistence:** When unpaused, the cursor teleports instantly back to the exact pixel it left inside the VM, preventing "cursor jump" detection.
-* **The Panic Switch (Ctrl+Alt+F):** Instantly toggles the RDP environment between windowed/fullscreen, or completely vanishes the Lite overlay and suspends background threads.
-* **Mouse-Bound Macros:** Allows binding of the Master Pause and Snip tools to Mouse Button 4 and Mouse Button 5, keeping the user's hands off the keyboard during recorded sessions.
+### 4.1 AI Intelligence & Routing
+* **Omni-Model Selector:** Dropdown for Claude 4.6, Grok 4, GPT-5.2, and Deepseek V3.2 R1.
+* **OpenRouter Auto-Mode:** Automatic task-based routing (identifies Math vs. Writing).
+* **System Prompt Injection:** User-defined master behavior rules (e.g., "Answer-only mode").
+* **Auto-Text Appending:** Field to automatically attach a prefix (e.g., "Solve this:") to all captures.
+* **Neural Text Sanitization:** Regex filter to strip AI-disclaimers (e.g., "As an AI model...").
+* **Textbook/CV Upload:** Button to attach PDFs for the AI to reference during answers.
+
+### 4.2 UI Features & Workflow
+* **Drag-and-Drop Capture Cache:** Vertical sidebar history for thumbnails; support for multi-image sending.
+* **Discrete Answer Module:** A tiny, transparent, scrollable box showing only final answers for 2-camera exams.
+* **Markdown Rendering:** Formatted equations, code blocks, and bold text.
+* **Persistent UI Memory:** Remembers X/Y position, scaling, and opacity across sessions.
+* **Live Mode:** Real-Time WebSocket streaming for audio/video transcription during job interviews.
+
+---
+
+## 5. STEALTH CONTROLS & HOTKEYS
+
+* **Master Pause / Release (Ctrl+Alt+C):**
+  * **Action:** Physically severs all input to the VM for safe Host OS usage.
+  * **Visual:** VM window dims 20%, Yellow banner reads: **"ZAP: MOUSE RELEASED"**.
+  * **Spatial Persistence:** Cursor teleports instantly back to the exact last VM coordinate.
+* **The Panic Switch (Ctrl+Alt+F):** Instantly vanishes all overlays and suspends AI threads.
+* **Mouse-Bound Macros:** Bind Pause/Release and Snip tools to Mouse Button 4 and Mouse Button 5.
 * **Capture Tools:**
-  * **Nav-Bar Rapid Capture:** A camera icon integrated into the title bar. One click takes a screen snip, pastes it, and sends it to the AI.
-  * **Region Snip & Full Screen:** Standard stealth capture tools triggerable via UI or custom keybinds.
-* **Undetectable Screen Recording:** A built-in, kernel-level stealth recorder (OBS alternative) that captures the session for evidence without triggering proctor recording bans.
-* **3-Cursor Remote Spoofing:** Tied directly into the Remote Screenshare Hub. Generates a delayed, smoothed "fake" mouse path for the proctor's recording software, hiding the erratic movements of the remote helper taking control over the WebSocket stream.
+  * **Nav-Bar Rapid Capture:** Title-bar camera icon for 1-click Snip-Paste-Send.
+  * **Region Snip & Full Screen Snip:** Standard stealth capture tools.
+* **3-Cursor Remote Spoofing:** Generates a smoothed, delayed "fake" mouse path for proctor recording software to hide remote-helper movements.
 
 ---
 
-## 5. ERROR HANDLING & USER SUPPORT MATRIX
+## 6. ERROR HANDLING & SUPPORT MATRIX
 
-| Error State / Trigger | User-Facing Message | Automated Zap Resolution |
+| Error State | User-Facing Message | Zap Auto-Resolution Logic |
 | :--- | :--- | :--- |
-| **Needs Admin Rights** (`Code 740`) | *"Admin Rights Required."* | UI displays a 1-click "Restart as Admin" button. |
-| **RDP Wrapper Fails to Unzip** | *"Corrupted Payload."* | Automatically deletes the temp folder and re-downloads the installer. |
-| **VM Stuck on 'Preparing Repair'** | *"VM State Corrupted."* | UI provides a "Nuke & Rebuild VM" button that wipes the session and restarts it clean in 10s. |
-| **Mic/Camera Not Routing** | *"Hardware Locked by Host."* | Warns user: "Another app (Discord/Zoom) is using your mic. Close it and click Retry." |
-| **API Key Rate Limit/Fail** | *"API Authentication Failed."* | If BYOK fails, auto-reverts to Zap's Master Key and alerts user. |
-| **Subscription Sync Fails** | *"Token Sync Error."* | Provides a "Force Refresh Account" button to ping the payment gateway. |
+| **Needs Admin** | *"Admin Rights Required."* | UI displays a 1-click "Restart as Admin" button. |
+| **Unzip Fail** | *"Corrupted Payload."* | Auto-deletes temp folder and re-downloads the installer. |
+| **VM Boot Loop** | *"VM State Corrupted."* | "Nuke & Rebuild VM" button resets session in 10s. |
+| **Hardware Lock**| *"Hardware Locked by Host."* | Prompts user to close conflicting apps (Discord/Zoom). |
+| **API Failure** | *"API Authentication Failed."* | If BYOK is invalid, auto-reverts to Zap Master Key. |
 
 ---
 
-## 6. BUSINESS LOGIC & MONETIZATION
-* **The Freemium Funnel:** All newly registered accounts receive exactly 5 free AI requests per day. Once exhausted, the chatbox locks with an upgrade prompt.
-* **Subscription Tiers:**
-  * **Monthly Plan:** Standard recurring unlimited access.
+## 7. BUSINESS LOGIC & DEVELOPMENT WORKFLOW
+
+### 7.1 Monetization (Monthly/Annual Only)
+* **Freemium:** 5 free AI requests/day per account.
+* **Subscription Tiers:** * **Monthly Plan:** Recurring unlimited access.
   * **Annual Plan:** Discounted yearly unlimited access.
-* **Crypto Payments:** Integrated Monero (XMR) gateway for users demanding total financial anonymity.
-* **Importable Config Profiles:** Users can save their specific Mode, Resolution, Keybinds, and AI settings as a profile, and share/import them via a dropdown menu.
-* **IsDevMode:** Hardcoded developer toggle to bypass all API limits during testing.
+* **Crypto:** Native Monero (XMR) gateway for anonymity.
+
+### 7.2 Development & Testing Workflow
+* **UI/Build Environment:** Locally on **Mac M4 via Parallels (Windows x86 VM)**. This utilizes local Apple Silicon speed for high-refresh ImGui development and compiling.
+* **Mechanics/Bypass Testing:** Remote team (Ivan) on **Bare-Metal PC hardware**. Validates kernel hooks against detection before release.
 
 ---
-**[END OF MASTER SPECIFICATION]**
+**[END OF MASTER SPECIFICATION V1.4]**
