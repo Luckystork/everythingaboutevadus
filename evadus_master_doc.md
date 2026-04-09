@@ -1,5 +1,5 @@
 # ZAP: COMPLETE ENGINEERING & ARCHITECTURE SPECIFICATION
-**Version:** 1.20 (The Absolute Final Uncompressed Blueprint)
+**Version:** 1.25 (The Absolute Final Uncompressed Blueprint)
 **Target:** 2026 Advanced Proctoring Bypasses (Respondus, SEB, Pearson, ProctorU, Canvas, Bluebook, Turnitin, Mercer Mettl, PSI Secure, TAO by OAT, EC-Council/LogMeIn Resolve, Iris Invigilation, ProctorExam.com, Testpad)
 
 ---
@@ -44,7 +44,7 @@ Dead center at the top of the launcher are three wide, high-contrast tabs: `LITE
     * **Hardware Overrides:** Manual selection for Host Microphone and Host Speaker routing.
     * **Version Rollback Engine:** A 1-click "Downgrade to Previous Version" button. If a new silent auto-update breaks Zap on the user's specific hardware right before an exam, they can instantly revert to the last stable build.
     * **App Behaviors:** Toggles for "Launch on Boot," "Minimize to Tray," and "Silent Auto-Updater."
-    * **Volatile RAM Vault Toggle:** Forces all screenshots, textbook PDFs, API keys, and Stealth DVR recordings to be stored in an encrypted temporary folder that exists *only* in RAM. Vaporizes instantly upon app close, leaving zero trace on the disk.
+    * **Volatile RAM Vault Toggle:** Forces all screenshots, textbook PDFs, API keys, and Stealth DVR recordings to be stored in an encrypted temporary folder that exists *only* in RAM. Vaporizes instantly upon app close, leaving zero trace on the disk. Includes a manual **"Export to USB"** button to safely dump the vault contents to a physical drive before the app closes.
     * **Multi-Monitor Ghosting:** Fakes a single-display EDID profile to the OS, allowing a physical second monitor to remain active while proctors see only one screen.
   * **Logout:** Securely terminates the session and wipes temp tokens.
 
@@ -98,6 +98,7 @@ To ensure users know Zap is highly optimized and accessible, the following minim
     * **Native USB-over-IP Tunnel:** Eliminates the need for paid third-party apps like VirtualHere. Zap natively emulates physical USB hubs to perfectly pass modern webcams and proprietary devices directly into the VM.
   * **GPU Driver & Gamma Bypass Toggle:** Kernel-level hooks to spoof GPU signatures and defeat advanced color-monitoring detection.
   * **Dynamic Resource & Firmware Allocation:** Input fields to manually specify CPU Core Count, RAM allocation, and a button to **"Clone Host SMBIOS/MAC Address"** so the VM perfectly mimics the Host PC's hardware fingerprint to bypass deep forensic checks.
+  * **Deep Registry Hypervisor Spoofer (Respondus Fix):** Actively scrubs and renames `HKEY_LOCAL_MACHINE\HARDWARE\DESCRIPTION\System` registry keys. If it detects "VMware", "QEMU", or "VirtualBox" strings, it rewrites them to match generic Dell/HP manufacturer IDs before the lockdown browser launches.
   * **Interception Monitor:** A live, scrolling terminal log of detected proctor executables.
 * **Robotic Audio Fix:** Hardcodes a 48kHz / 16-bit audio stream with a fixed 20ms buffer size via the RDP registry, guaranteeing clean microphone passthrough.
 * **Hypervisor Watchdog (Boot Loop Fix):** Edits the virtual machine's BCD (Boot Configuration Data) to permanently disable `RecoveryEnabled` and ignore all disk-check flags, preventing the "Preparing Automatic Repair" loop.
@@ -155,17 +156,18 @@ The primary ImGui overlay used inside the exam environment.
 ---
 
 ## 5. STEALTH CONTROLS & HOTKEYS
-* **Master Pause / Release (Ctrl+Alt+C):**
+* **Master Pause / Release:**
   * **Action:** Physically severs all input to the VM for safe Host OS usage.
   * **Visual & The Legend Overlay:** The VM window dims 20% and a bold Yellow banner reads: **"ZAP: MOUSE RELEASED"**. Crucially, this paused state renders a clear, on-screen visual legend displaying all active hotkeys (Snip, Hide, Panic, Paraphrase, etc.) so the user does not have to memorize them under pressure.
   * **Spatial Persistence:** Cursor teleports instantly back to the exact last VM coordinate upon unpausing.
-* **The Panic Switch (Ctrl+Alt+F):** Instantly vaporizes the RAM Vault, terminates AI threads, and vanishes all overlays.
+* **The Panic Switch:** Instantly vaporizes the RAM Vault, terminates AI threads, and vanishes all overlays.
+* **Advanced Key & Mouse Binding Engine:** * Every function (Pause, Panic, Snip, Hide, Paraphrase) can be bound to standard keyboard combinations (e.g., `Ctrl+Alt+C`, `Ctrl+Alt+F`) *or* to physical mouse side-buttons (Mouse4/Mouse5) for instantaneous, one-handed activation.
 * **Capture Tools & Hotkeys:**
-  * **Keyboard Snip Hotkey:** Dedicated global keyboard shortcut (Default: `Ctrl+Shift+S`, user-customizable) to instantly trigger the stealth region capture tool.
+  * **Keyboard Snip Hotkey:** User-customizable global shortcut to instantly trigger the stealth region capture tool.
   * **The Auto-Clipboard Sanitizer:** Directly post-snip, Zap actively wipes the Windows clipboard in sub-10 milliseconds to prevent SEB/Mercer Mettl from detecting the image in the system memory.
-  * **The Paraphrase Hotkey (Ctrl+Shift+P):** Immediately triggers the Anti-Detector Paraphraser Engine on the last generated text block.
-  * **Ghost Mode Hotkey (Ctrl+Shift+G):** Instantly toggles the overlay's click-through state.
-  * **Quick Minimize Hotkey (Ctrl+Shift+M):** Instantly collapses the AI UI into the 50x50 pill without using the mouse.
+  * **The Paraphrase Hotkey:** Immediately triggers the Anti-Detector Paraphraser Engine on the last generated text block.
+  * **Ghost Mode Hotkey:** Instantly toggles the overlay's click-through state.
+  * **Quick Minimize Hotkey:** Instantly collapses the AI UI into the 50x50 pill without using the mouse.
   * **Extended HID / Foot Pedal Support:** Explicit API support to map any hotkey directly to F13-F24 bindings, natively supporting generic USB Foot Pedals for fully hands-free interaction.
   * **Nav-Bar Rapid Capture:** Title-bar camera icon for 1-click Snip-Paste-Send.
 * **Capture Indicator Suppression:** Hooks deeply into the Windows Desktop Duplication API to actively suppress the "Screen is being recorded" red-dot indicator or system-tray notifications generated by the host OS.
@@ -216,6 +218,7 @@ During the C++ build phase, all tier locks, API checks, and HWID bindings are st
 
 ### 8.2 Web-First Purchasing Architecture
 * **Purchase Flow:** Users create accounts and purchase subscriptions entirely on the Zap Website. 
+* **Cryptocurrency / Monero (XMR) Gateway:** Native support for private, decentralized crypto payments to ensure absolute buyer anonymity.
 * **App Sync:** The Zap desktop app contains NO payment processing UI. Upon login, the app hits the `api.zap.com/v1/auth` endpoint to retrieve the user's active tier and sets the internal state.
 
 ### 8.3 Subscription Tiers (AI & Usage Caps)
@@ -249,4 +252,4 @@ During the C++ build phase, all tier locks, API checks, and HWID bindings are st
   * Remote Access Tool.
 
 ---
-**[END OF MASTER SPECIFICATION V1.20]**
+**[END OF MASTER SPECIFICATION V1.25]**
