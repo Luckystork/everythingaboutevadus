@@ -1,37 +1,44 @@
 # ZAP: COMPLETE ENGINEERING & ARCHITECTURE SPECIFICATION
-**Version:** 1.5 (Final UI, Logic & Screenshare Master)
-**Target:** 2026 Advanced Proctoring Bypasses (Respondus, SEB, Pearson, ProctorU, Bluebook, etc.)
+**Version:** 1.8 (The Uncompressed Master Blueprint - UI, Stealth, UX, Network, Errors & Monetization)
+**Target:** 2026 Advanced Proctoring Bypasses (Respondus, SEB, Pearson, ProctorU, Canvas, Bluebook, etc.)
 
 ---
 
 ## 1. THE LAUNCHER (COMMAND CENTER UI/UX)
 The Launcher is a standalone C++ ImGui dashboard designed for zero-latency performance. It mirrors the structural layout of Evadus to ensure 1:1 familiarity for power users but features a polished, enterprise-grade aesthetic.
 
-### 1.1 Visual Identity & The Window
-* **The Frame:** A sleek, frameless borderless window. No standard Windows title bars or borders.
+### 1.1 First-Execution Stealth (Polymorphic Launch)
+* **Runtime Mutator:** Before the UI ever renders, the `Zap.exe` executes a Runtime Mutator. It recompiles its own memory footprint and changes its process name in Task Manager to a randomly generated whitelisted Windows service (e.g., `spoolsv_update.exe` or `svchost_sys.exe`).
+* **Auto-Cleanup:** Upon successful launch, Zap automatically deletes its own installation `.zip` file and desktop shortcut to clear forensic footprints from the hard drive.
+
+### 1.2 Visual Identity & The Window
+* **The Frame:** A sleek, frameless borderless window. No standard Windows title bars or borders. It is draggable by clicking anywhere on the background.
 * **Base Palette:** Obsidian Black (`#0D0D0D`) backgrounds with Charcoal Grey (`#1A1A1A`) floating panels, and Off-White text (`#EDEDED`).
 
-### 1.2 Top Navigation (The "Chameleon" Tab Layout)
+### 1.3 Top Navigation (The "Chameleon" Tab System)
 Dead center at the top of the launcher are three wide, high-contrast tabs: `LITE`, `CORE`, and `PLUS`.
 * **Dynamic Content Shifting:** Clicking a tab swaps the entire main body settings and shifts the accent color of the application:
-* **Colors:** * `LITE` = Electric Cyan (`#00FFFF`)
+  * `LITE` = Electric Cyan (`#00FFFF`)
   * `CORE` = Vivid Purple (`#BF00FF`)
   * `PLUS` = Zap Electric Yellow (`#D4FF00`)
+* **Tier Locking UX:** If a user does not have the required subscription tier for a specific tab (e.g., Free user clicking PLUS), the tab's settings are greyed out, a Padlock icon appears in the center, and clicking it displays an inline prompt to upgrade via the website.
 
-### 1.3 The Command Hub (Top-Right Corner)
+### 1.4 The Command Hub (Top-Right Corner)
 * **Status Shield:** A glowing shield icon next to the profile. 
   * `[INACTIVE]` (Grey/Dimmed) by default.
   * `[READY]` (Active Accent Color) when the bypass/wrapper is successfully hooked.
 * **Remote Assist Toggle (The Broadcast Icon):** A dedicated icon next to the shield. Clicking this opens the standalone **Remote Screenshare Hub** (See Section 3), allowing users to instantly generate a session ID for a remote helper regardless of which tab they are currently using.
 * **The User Profile Icon:** A circular avatar. Clicking it opens the Master Dropdown Menu:
   * **User Identity:** Displays the logged-in Email and a unique alphanumeric Zap ID.
-  * **Live Account Stats:** "AI Requests Used: X/5" (Real-time counter) and "Total Active Exam Time."
+  * **Live Account Stats:** "AI Requests Used: X/5" (or "Unlimited") and "Total Active Exam Time."
   * **Active Plan Details:** Displays "Free Trial," "Monthly Subscriber," or "Annual Subscriber."
   * **Cryo-Billing Toggle:** A 1-click button to "Freeze" subscription time during academic breaks.
   * **Global Settings (Opens a Pop-up Modal):**
     * **BYO API Key Manager:** Input fields to override Zap's Master Key. Supports: OpenAI, Anthropic, Gemini, OpenRouter, and Local LM Studio IP/Ports.
     * **Hardware Overrides:** Manual selection for Host Microphone and Host Speaker routing.
     * **App Behaviors:** Toggles for "Launch on Boot," "Minimize to Tray," and "Silent Auto-Updater."
+    * **Volatile RAM Vault Toggle:** Forces all screenshots, textbook PDFs, and API keys to be stored in an encrypted temporary folder that exists *only* in RAM. Vaporizes instantly upon app close, leaving zero trace on the disk.
+    * **Multi-Monitor Ghosting:** Fakes a single-display EDID profile to the OS, allowing a physical second monitor to remain active while proctors see only one screen.
   * **Logout:** Securely terminates the session and wipes temp tokens.
 
 ---
@@ -46,13 +53,15 @@ Dead center at the top of the launcher are three wide, high-contrast tabs: `LITE
   * **Opacity Slider:** 0% to 100% dynamic transparency.
   * **Window Scale:** Resizing percentage for the overlay.
   * **Stealth Visibility Keybinds:** Custom hotkey to vanish/show the browser instantly.
+* **Canvas DOM Vulnerability Fix:** Injects a lightweight JS payload into the exam browser that freezes `window.onblur` and `document.visibilityState`. Forces the exam to always think it is the active window, bypassing tab-tracking.
+* **Global Drag-and-Drop:** Captures physical file drags (PDFs, images) from the host OS and routes them directly into the invisible browser instance.
 * **Bug Fixes:** Includes an automated input-buffer wipe to fix the "Sticky Key" bug when tabbing between the exam and the overlay.
 
 ### 2.2 The [CORE] Tab (Behavioral & Process Stealth)
 **Target:** Behavioral AI monitors and process-list scanners.
 * **Mechanic:** Injects stealth logic directly into legitimate Windows processes.
 * **Settings Panel:**
-  * **Polymorphic Spoofer:** "Generate New Identity" button to rename/hide the Zap process as a random Windows service (e.g., `svchost_update.exe`).
+  * **Polymorphic Spoofer:** "Generate New Identity" button to manually rename/hide the Zap process as a random Windows service.
   * **Biometric Typing Engine:** * **Target WPM** slider.
     * **Randomized Delay bounds (ms)** (e.g., 60ms - 150ms).
     * **Human Error %** slider to inject artificial typos and backspace corrections.
@@ -65,49 +74,61 @@ Dead center at the top of the launcher are three wide, high-contrast tabs: `LITE
   * **Adaptive Resolution:** Toggles for "Host Fullscreen" vs. "Custom X/Y" with free aspect ratio stretching for ultra-wide monitors.
   * **Hardware Passthrough:** Dropdown to route the raw physical IDs of the Host Microphone and Webcam into the VM.
   * **GPU Driver & Gamma Bypass Toggle:** Kernel-level hooks to spoof GPU signatures and defeat advanced color-monitoring detection.
+  * **Dynamic Resource Allocation:** Input fields to manually specify CPU Core Count and RAM allocation so the VM matches the physical Host PC specs exactly, defeating hardware-mismatch flags.
   * **Interception Monitor:** A live, scrolling terminal log of detected proctor executables.
+* **Robotic Audio Fix:** Hardcodes a 48kHz / 16-bit audio stream with a fixed 20ms buffer size via the RDP registry, guaranteeing clean microphone passthrough.
+* **Hypervisor Watchdog (Boot Loop Fix):** Edits the virtual machine's BCD (Boot Configuration Data) to permanently disable `RecoveryEnabled` and ignore all disk-check flags, preventing the "Preparing Automatic Repair" loop.
 * **Bug Fixes:** Hardcoded override that replaces the VM "Sign Out" button with a "Shutdown" button to prevent session boot loops.
 
 ---
 
 ## 3. REMOTE SCREENSHARE HUB (STEALTH ASSISTANCE)
-Designed to provide a secure, proctor-invisible portal for remote helpers. Accessed globally via the **Broadcast Icon** in the Command Hub.
+Designed to provide a secure, proctor-invisible portal for remote helpers. Accessed globally via the Broadcast Icon.
 * **Architecture:** A standalone stealth-wrapped pop-up window built directly into the Zap kernel.
 * **UI Elements:**
   * **ID Field:** Displays the user's secure connection ID.
   * **Password Field:** Displays a temporary, session-based passcode.
   * **Connection Toggle:** Large button to initiate/terminate the WebSocket handshake.
 * **Bypass:** Operates entirely through Zap's process-ghosting, making it invisible to proctoring software that specifically flags AnyDesk, TeamViewer, or Chrome Remote Desktop.
+* **Proctor-Priority Input Override:** If a live proctor takes control of the student's mouse, physical movement on the host machine instantly suspends the remote helper's input for 10 seconds to prevent "cursor fighting."
+* **Silent Comms Channel:** Once connected, the remote helper can type messages that appear as a tiny, translucent, scrolling text-ticker at the very bottom edge of the student's screen.
 
 ---
 
-## 4. THE AI ASSISTANT SIDEBAR & UI
+## 4. THE AI ASSISTANT OVERLAY & UI
 The primary ImGui overlay used inside the exam environment.
 
-### 4.1 AI Intelligence & Routing
+### 4.1 UI Placement & Accessibility
+* **Default State:** Anchored vertically to the right side of the screen.
+* **Compact Mode (Stealth Anchor):** Clicking the minimize dash collapses the entire UI into a tiny 50x50px floating pill. Expanding it restores the exact previous state.
+* **Persistent UI Memory:** Remembers X/Y position, scaling, and opacity across all sessions and reboots.
+
+### 4.2 AI Intelligence & Routing
 * **Omni-Model Selector:** Dropdown for Claude 4.6, Grok 4, GPT-5.2, and Deepseek V3.2 R1.
+* **Omni-Model Quick Cycle:** A keyboard shortcut to cycle through LLMs instantly without opening the dropdown.
 * **OpenRouter Auto-Mode:** Automatic task-based routing (identifies Math vs. Writing).
 * **System Prompt Injection:** User-defined master behavior rules (e.g., "Answer-only mode").
 * **Auto-Text Appending:** Field to automatically attach a prefix (e.g., "Solve this:") to all captures.
 * **Neural Text Sanitization:** Regex filter to strip AI-disclaimers (e.g., "As an AI model...").
 * **Textbook/CV Upload:** Button to attach PDFs for the AI to reference during answers.
+* **LaTeX & Advanced OCR:** The screen snipping tool utilizes an advanced OCR pipeline to preserve LaTeX math formatting and multi-language text before sending it to the AI prompt.
 
-### 4.2 UI Features & Workflow
+### 4.3 UI Features & Workflow
 * **Drag-and-Drop Capture Cache:** Vertical sidebar history for thumbnails; support for multi-image sending.
-* **Discrete Answer Module:** A tiny, transparent, scrollable box showing only final answers for 2-camera exams.
+* **Follow-up Input Box:** A dedicated text field at the bottom of the chat to ask the AI follow-up questions about the generated answer.
+* **Discrete Answer Module:** A tiny, transparent, scrollable box (200x100px) showing *only* final A/B/C/D answers for 2-camera physical room scans.
 * **Markdown Rendering:** Formatted equations, code blocks, and bold text.
-* **Persistent UI Memory:** Remembers X/Y position, scaling, and opacity across sessions.
 * **Live Mode:** Real-Time WebSocket streaming for audio/video transcription during job interviews.
+* **Push-to-Talk (PTT) Audio Query:** Bound to a mouse side-button. Hold to whisper questions to the AI hands-free.
 
 ---
 
 ## 5. STEALTH CONTROLS & HOTKEYS
-
 * **Master Pause / Release (Ctrl+Alt+C):**
   * **Action:** Physically severs all input to the VM for safe Host OS usage.
   * **Visual:** VM window dims 20%, Yellow banner reads: **"ZAP: MOUSE RELEASED"**.
   * **Spatial Persistence:** Cursor teleports instantly back to the exact last VM coordinate.
-* **The Panic Switch (Ctrl+Alt+F):** Instantly vanishes all overlays and suspends AI threads.
+* **The Panic Switch (Ctrl+Alt+F):** Instantly vaporizes the RAM Vault, terminates AI threads, and vanishes all overlays.
 * **Mouse-Bound Macros:** Bind Pause/Release and Snip tools to Mouse Button 4 and Mouse Button 5.
 * **Capture Tools:**
   * **Nav-Bar Rapid Capture:** Title-bar camera icon for 1-click Snip-Paste-Send.
@@ -116,25 +137,51 @@ The primary ImGui overlay used inside the exam environment.
 
 ---
 
-## 6. ERROR HANDLING & SUPPORT MATRIX
+## 6. NETWORK, SECURITY & ANTI-CRACK ARCHITECTURE
+
+### 6.1 Network Stealth (Domain Fronting)
+* To bypass network traffic analysis (where proctors flag connections to OpenAI or proxy servers), all Zap API calls are domain-fronted to look like standard Windows Telemetry or Microsoft Azure traffic. 
+
+### 6.2 Anti-Crack & HWID Locking
+* **Hardware ID (HWID) Binding:** Upon login, the user's session token is cryptographically bound to their motherboard and CPU serial numbers. 
+* **Server-Side Validation:** All AI requests and bypass payload injections require a server-side handshake. The software cannot be cracked locally because the core execution keys live on the server.
+
+---
+
+## 7. ERROR HANDLING & SUPPORT MATRIX
 
 | Error State | User-Facing Message | Zap Auto-Resolution Logic |
 | :--- | :--- | :--- |
-| **Needs Admin** | *"Admin Rights Required."* | UI displays a 1-click "Restart as Admin" button. |
+| **Needs Admin** | *(Never shown)* | App manifest forces Administrator launch by default. Bypasses "Code 740". |
 | **Unzip Fail** | *"Corrupted Payload."* | Auto-deletes temp folder and re-downloads the installer. |
-| **VM Boot Loop** | *"VM State Corrupted."* | "Nuke & Rebuild VM" button resets session in 10s. |
+| **VM Boot Loop** | *"VM State Corrupted."* | Hypervisor Watchdog ignores BCD recovery flags. "Nuke & Rebuild" fallback. |
 | **Hardware Lock**| *"Hardware Locked by Host."* | Prompts user to close conflicting apps (Discord/Zoom). |
 | **API Failure** | *"API Authentication Failed."* | If BYOK is invalid, auto-reverts to Zap Master Key. |
+| **Audio Desync** | *"Audio Driver Lag."* | Forces 20ms fixed RDP audio buffer via registry hooks. |
+| **SEB UI Glitch**| *(Silent)* | Temporarily disables hardware overlay planes if SEB display hooks clash. |
 
 ---
 
-## 7. BUSINESS LOGIC
+## 8. BUSINESS LOGIC & MONETIZATION (API SYNC)
 
-### 7.1 Monetization (Monthly/Annual Only)
-* **Freemium:** 5 free AI requests/day per account.
-* **Subscription Tiers:** * **Monthly Plan:** Recurring unlimited access.
-  * **Annual Plan:** Discounted yearly unlimited access.
-* **Crypto:** Native Monero (XMR) gateway for anonymity.
+### 8.1 Web-First Purchasing Architecture
+* **Purchase Flow:** Users create accounts and purchase subscriptions entirely on the Zap Website. 
+* **App Sync:** The Zap desktop app contains NO payment processing UI. Upon login, the app hits the `api.zap.com/v1/auth` endpoint to retrieve the user's active tier and sets the internal state.
+* **Development Strategy (Feature Flags):** During the C++ build phase, all tier locks and API checks are wrapped in a developer feature flag (`#define DEV_UNLOCK_ALL true`). This allows seamless local building and testing while the web backend is under construction.
+
+### 8.2 Subscription Tiers (Evadus Matched)
+* **Basic Plan ($0):**
+  * 5 Requests/day. 
+  * LITE tab access only.
+  * Access to 1 AI Model.
+* **Premium Plan ($35/month | $50/year):**
+  * Unlimited Requests. 
+  * CORE tab access.
+  * All Gemini Models.
+* **Unlimited Plan ($60/month | $80/year):**
+  * Unlimited Requests. 
+  * PLUS tab access (Bare-metal bypass). 
+  * Omni-Model access (Claude 4.6, GPT-5.2, Deepseek V3.2).
 
 ---
-**[END OF MASTER SPECIFICATION V1.5]**
+**[END OF MASTER SPECIFICATION V1.8]**
