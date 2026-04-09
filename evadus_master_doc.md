@@ -1,5 +1,5 @@
 # ZAP: COMPLETE ENGINEERING & ARCHITECTURE SPECIFICATION
-**Version:** 1.4 (Final UI, Logic, Screenshare & M4 Dev-Workflow Master)
+**Version:** 1.5 (Final UI, Logic & Screenshare Master)
 **Target:** 2026 Advanced Proctoring Bypasses (Respondus, SEB, Pearson, ProctorU, Bluebook, etc.)
 
 ---
@@ -103,41 +103,4 @@ The primary ImGui overlay used inside the exam environment.
 ## 5. STEALTH CONTROLS & HOTKEYS
 
 * **Master Pause / Release (Ctrl+Alt+C):**
-  * **Action:** Physically severs all input to the VM for safe Host OS usage.
-  * **Visual:** VM window dims 20%, Yellow banner reads: **"ZAP: MOUSE RELEASED"**.
-  * **Spatial Persistence:** Cursor teleports instantly back to the exact last VM coordinate.
-* **The Panic Switch (Ctrl+Alt+F):** Instantly vanishes all overlays and suspends AI threads.
-* **Mouse-Bound Macros:** Bind Pause/Release and Snip tools to Mouse Button 4 and Mouse Button 5.
-* **Capture Tools:**
-  * **Nav-Bar Rapid Capture:** Title-bar camera icon for 1-click Snip-Paste-Send.
-  * **Region Snip & Full Screen Snip:** Standard stealth capture tools.
-* **3-Cursor Remote Spoofing:** Generates a smoothed, delayed "fake" mouse path for proctor recording software to hide remote-helper movements.
-
----
-
-## 6. ERROR HANDLING & SUPPORT MATRIX
-
-| Error State | User-Facing Message | Zap Auto-Resolution Logic |
-| :--- | :--- | :--- |
-| **Needs Admin** | *"Admin Rights Required."* | UI displays a 1-click "Restart as Admin" button. |
-| **Unzip Fail** | *"Corrupted Payload."* | Auto-deletes temp folder and re-downloads the installer. |
-| **VM Boot Loop** | *"VM State Corrupted."* | "Nuke & Rebuild VM" button resets session in 10s. |
-| **Hardware Lock**| *"Hardware Locked by Host."* | Prompts user to close conflicting apps (Discord/Zoom). |
-| **API Failure** | *"API Authentication Failed."* | If BYOK is invalid, auto-reverts to Zap Master Key. |
-
----
-
-## 7. BUSINESS LOGIC & DEVELOPMENT WORKFLOW
-
-### 7.1 Monetization (Monthly/Annual Only)
-* **Freemium:** 5 free AI requests/day per account.
-* **Subscription Tiers:** * **Monthly Plan:** Recurring unlimited access.
-  * **Annual Plan:** Discounted yearly unlimited access.
-* **Crypto:** Native Monero (XMR) gateway for anonymity.
-
-### 7.2 Development & Testing Workflow
-* **UI/Build Environment:** Locally on **Mac M4 via Parallels (Windows x86 VM)**. This utilizes local Apple Silicon speed for high-refresh ImGui development and compiling.
-* **Mechanics/Bypass Testing:** Remote team (Ivan) on **Bare-Metal PC hardware**. Validates kernel hooks against detection before release.
-
----
-**[END OF MASTER SPECIFICATION V1.4]**
+  * **Action
